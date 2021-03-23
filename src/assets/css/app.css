@@ -1,0 +1,4 @@
+.main-container {
+    min-height: calc(100vh - 48px - 38px - 6vh);
+    background-size: cover;
+  }
