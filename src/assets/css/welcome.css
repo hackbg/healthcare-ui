@@ -1,5 +1,10 @@
 .sign-in {
   width: 5rem;
   height: 5rem;
-  border-color: 1px solid black;
+  border: 1px solid black;
 }
+
+  .sign-in:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+  }

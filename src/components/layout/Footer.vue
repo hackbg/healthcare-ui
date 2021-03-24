@@ -2,13 +2,13 @@
   <footer class="footer section__footer">
     <div class="footer__content">
       <div class="footer__left">
-        <span>Copyright &copy; 2021</span>
+        <span>{{ $t('labels.copyright') }}</span>
       </div>
       <div class="footer__center">
         <a href="https://hack.bg"><img class="footer__logo" src="@/assets/img/hack-logo.png"/></a>
       </div>
       <div class="footer__right">
-        <span>Created under the MIT License</span>
+        <span>{{ $t('labels.mitlicense') }}</span>
         <a
           href="https://github.com"
           target="_blank"
