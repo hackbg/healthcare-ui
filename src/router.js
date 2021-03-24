@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import Home from './components/Home.vue';
 import Welcome from './components/Welcome.vue';
 import Insurance from './components/Insurance.vue';
-import Recepies from './components/Recepies.vue';
+import Prescriptions from './components/Prescriptions.vue';
 import NotFound from './components/NotFound.vue';
 
 
@@ -38,9 +38,9 @@ const router = new Router({
       }
     },
     {
-      path: '/recepies',
-      name: 'Recepies',
-      component: Recepies,
+      path: '/prescriptions',
+      name: 'Prescriptions',
+      component: Prescriptions,
       props: true,
       meta: {
         requiresAuth: false

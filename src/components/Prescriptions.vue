@@ -1,14 +1,14 @@
 <template>
     <div class="main-container">
-    Recepies
+    Prescriptions
     </div>
 </template>
 
 <script>
-// import '../assets/css/not_found.css';
+// import '../assets/css/not_found.css'; //TODO: delete after if not used
 
 export default {
-  name: 'Recepies',
+  name: 'Prescriptions',
   props: {
     msg: String
   }

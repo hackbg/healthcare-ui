@@ -1,7 +1,11 @@
 .sign-in {
-  width: 5rem;
+  width: 8rem;
   height: 5rem;
-  border: 1px solid black;
+  line-height: 5rem;
+  border: 1px solid #9013fe;
+  text-align: center;
+  color: #9013fe;
+  margin-top: 5vh;
 }
 
   .sign-in:hover {

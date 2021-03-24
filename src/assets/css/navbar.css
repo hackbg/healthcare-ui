@@ -10,7 +10,7 @@
 }
 
 .navbar {
-  padding: 5px 0 5px 0 !important ;
+  padding: 0 0 0 0 !important ;
 }
 
 .navbar-menu {
@@ -19,7 +19,7 @@
 }
 
 .navbar-item {
-  font-size: 20px;
+  font-size: 16px;
 }
 
   .navbar-item:hover { 
@@ -40,5 +40,5 @@
 }
 
   .nav-link:hover {
-    color: #9013fe  !important;
+    color: #fafafa  !important;
   }

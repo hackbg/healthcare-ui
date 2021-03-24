@@ -15,7 +15,6 @@
           class="nav__link"
         >
         <img class="footer__icon" src="@/assets/img/github-logo.png"/>
-        <!-- <ion-icon name="logo-github" class="footer__icon"></ion-icon> -->
       </a>
       </div>
     </div>
