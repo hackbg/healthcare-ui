@@ -1,22 +1,41 @@
 <template>
-  <div class="main-container" style="text-align: center">
-    <div class="sign-in" @click="setPatient()">
-      Patient
+  <div class="main-container content">
+    <div class="title">
+      {{ $t('text.welcome.title') }}
     </div>
-    <div class="sign-in">
-      Doctor
-    </div>
-    <div class="sign-in">
-      Pharmacie
-    </div>
-    <div class="sign-in">
-      Insurer
-    </div>
+      {{ $t('text.welcome.content') }}
+    <row :gutter="12">
+      <column :xs="12" :md="4" :lg="3">
+        <div class="sign-in" @click="setPatient()">
+          {{ $t('text.welcome.patient') }}
+        </div>
+      </column>
+      <column :xs="12" :md="4" :lg="3">
+        <div class="sign-in" @click="setDoctor()">
+          {{ $t('text.welcome.doctor') }}
+        </div>
+      </column>
+      <column :xs="12" :md="4" :lg="3">
+        <div class="sign-in" @click="setPharmacie()">
+          {{ $t('text.welcome.pharmacie') }}
+        </div>
+      </column>
+      <column :xs="12" :md="4" :lg="3">
+        <div class="sign-in" @click="setInsurer()">
+          {{ $t('text.welcome.insurer') }}
+        </div>
+      </column>
+    </row>
   </div>
 </template>
 
 <script>
+import Vue from 'vue';
+import { Row, Column } from 'vue-grid-responsive';
 import '../assets/css/welcome.css';
+
+Vue.component('row', Row);
+Vue.component('column', Column);
 
 export default {
   name: 'Welcome',

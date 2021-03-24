@@ -3,7 +3,19 @@
 
   },
   "labels": {
-    "copyright": "Copyright &copy; 2021",
+    "navbar": {
+      "healthcare": "Healthcare",
+      "insurance": "Insurance",
+      "prescriptions": "Prescriptions",
+      "signout": "Sign Out",
+      "signin": "Log in",
+      "language": {
+        "en": "EN",
+        "bg": "BG"
+      }
+    },
+    "pageNotFound": "OOPS, PAGE NOT FOUND.",
+    "copyright": "Copyright © 2021",
     "mitlicense": "Created under the MIT License"
   },
   "buttons": {
@@ -23,6 +35,20 @@
   },
   "menu": {
 
+  },
+  "text": {
+    "welcome": {
+      "title": "Welcome to our healthcare blockchain demo!",
+      "content": "Log in as a different participant and consider the various functionalities that can be used.",
+      "patient": "Patient",
+      "doctor": "Doctor",
+      "pharmacie": "Pharmacie",
+      "insurer": "Insurer"
+    },
+    "home": {
+      "title": "Short demo for healthcare blockchain.",
+      "content": "Doctors can make prescriptions.<br/>Patients can recieve online prescription with up to 18 medicines in it.<br/>Pharmacies can check for online prescription and sell the prescribed medicines.<br/>The goal is to avoid medicines fraud.<br/>The doctor can't prescribe medicines for which doesn't have right. For example not legal or too expensive.<br/>Fraudsters not to be able to falsify prescriptons. For examle fake prescriptions with free medicines and sell them after.<br/>Patients not to rewrite prescriptions.<br/>Pharmacies not to lie to the goverment that they have given more free and reduced medicines than they really did."
+    }
   },
   "pages": {
     "footer": {

@@ -1,15 +1,14 @@
 <template>
-  <div class="main-container" style="text-align: center">
-    <br>
-    Short demo for healthcare blockchain. <br>
-    Doctors can check for patient insurance.<br>
-    Patient can recieve online recepie with up to 18 medicines in it. <br>
-    Pharmacies can check for online prescription and sell the prescribed medicines. <br>
+  <div class="main-container content">
+    <div class="title">
+      {{ $t('text.home.title') }}
+    </div>
+    <span v-html="$t('text.home.content')"></span>
   </div>
 </template>
 
 <script>
-// import '../assets/css/not_found.css';
+import '../assets/css/home.css';
 
 export default {
   name: 'Home',
