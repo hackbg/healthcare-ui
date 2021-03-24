@@ -7,7 +7,7 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item class="navbar-item" to="/home" exact><div class="navbar-item-text">Healthcare</div></b-nav-item>
-          <b-nav-item class="navbar-item" to="/insurance"><div class="navbar-item-text">Insurance</div></b-nav-item>
+          <b-nav-item v-if="userType === 'doctor' || userType === 'insurer'" class="navbar-item" to="/insurance"><div class="navbar-item-text">Insurance</div></b-nav-item>
           <b-nav-item class="navbar-item" to="/recepies"><div class="navbar-item-text">Recepies</div></b-nav-item>
         </b-navbar-nav>
         <!-- Right aligned nav items -->
@@ -16,7 +16,7 @@
             <b-nav-item class="navbar-item" href="#">EN</b-nav-item >
             <b-nav-item class="navbar-item" href="#">BG</b-nav-item >
           </b-nav-item-dropdown>
-          <b-nav-item class="navbar-item" to="/"><div class="navbar-item-text">Sign Out</div></b-nav-item>
+          <b-nav-item class="navbar-item" @click="signOut()"><div class="navbar-item-text">Sign Out</div></b-nav-item>
         </b-navbar-nav> 
       </b-collapse>
     </b-navbar>
@@ -36,6 +36,17 @@ export default {
     return {
     //   web3
     }
+  },
+  computed: {
+    userType() {
+      return localStorage.userType;
+    }
+  },
+  methods: {
+    signOut() {
+      localStorage.userType = undefined;
+      this.$router.push('/');
+    },
   }
 }
 </script>

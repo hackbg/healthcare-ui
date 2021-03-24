@@ -1,0 +1,53 @@
+{
+  "fields": {
+
+  },
+  "labels": {
+    "copyright": "Copyright &copy; 2021",
+    "mitlicense": "Created under the MIT License"
+  },
+  "buttons": {
+    "ok": "OK",
+    "cancel": "Cancel"
+  },
+  "errors": {
+
+  },
+  "dialogs": {
+    "titles": {
+      "success": "Success!"
+    },
+    "messages": {
+
+    }
+  },
+  "menu": {
+
+  },
+  "pages": {
+    "footer": {
+      "title": "Footer"
+    },
+    "navbar": {
+      "title": "Navigation Menu"
+    },
+    "home": {
+      "title": "Home"
+    },
+    "insurance": {
+      "title": "Insurance"
+    },
+    "notfound": {
+      "title": "Not Found"
+    },
+    "recepieNew": {
+      "title": "New Recepie"
+    },
+    "recepies": {
+      "title": "Recepies"
+    },
+    "welcome": {
+      "title": "Welcome"
+    }
+  }
+}

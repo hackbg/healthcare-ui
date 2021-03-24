@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "prettier-js": "npx prettier --write 'components/*.js'"
+    "prettier-js": "npx prettier --write 'components/*.js'",
+    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
   },
   "dependencies": {
     "bootstrap": "^4.6.0",
@@ -15,9 +16,11 @@
     "node-sass": "^5.0.0",
     "sass-loader": "^10.1.1",
     "vue": "^2.6.11",
+    "vue-i18n": "^8.24.2",
     "vue-router": "^3.5.1"
   },
   "devDependencies": {
+    "@intlify/vue-i18n-loader": "^1.1.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
