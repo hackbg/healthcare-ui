@@ -1,13 +1,17 @@
 .main-container {
-  min-height: calc(100vh - 48px - 38px - 6vh);
+  min-height: calc(100vh - 48px - 9px - 6vh);
   background-size: cover;
 }
 
 .title {
-  margin-top: 2rem;
-  margin-bottom: 1rem;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
   color: #9013fe;
   font-size: 20px;
+}
+
+.padding {
+  padding-top: 2rem;
 }
 
 .content {
@@ -15,7 +19,68 @@
   line-height: 1.8;
 }
 
-::selection {
-  background: #af59be;
-  color: #fefefe;
+  ::selection {
+    background: #af59be;
+    color: #fefefe;
+  }
+
+.main-table-style {
+  table-layout: fixed;
+  width: 99% !important;
+  margin-left: 0.5%;
+  margin-right: 0.5%;
+  background-color: #b57ef2 !important;
+  opacity: 0.5;
+  color: ivory !important;
+  opacity: 0.9;
+  border: 1px solid #7F797B;
+}
+
+.btn-primary {
+  background-color: #9013fe !important;
+  border: 1px solid #6635a6 !important;
+}
+
+  .btn-primary:hover {
+    background-color: #af59be !important;
+    border: 1px solid #9013fe !important;
+    transform: scale(1.1);
+  }
+
+  .btn-secondary:hover {
+    transform: scale(1.1) !important;
+  }
+
+.modal-main {
+  background-color: #e2d3f3 !important;
+}
+
+.modal-content {
+  border: 1px solid #7F797B !important;
+}
+
+.modal-form {
+  background-color: #e2d3f3 !important;
+}
+
+.modal-header {
+  background-color: #e2d3f3 !important;
+}
+
+.modal-body {
+  background-color: #e2d3f3 !important;
+}
+
+.modal-footer {
+  background-color: #e2d3f3 !important;
+}
+
+.simple-input {
+  margin-right: 10px;
+  padding-bottom: 5px;
+}
+
+/* TODO: change .navbar-toggler-icon not working */
+.navbar-toggler-icon { 
+  background-color:#9013fe !important;
 }

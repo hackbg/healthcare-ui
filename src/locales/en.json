@@ -1,6 +1,6 @@
 {
   "fields": {
-
+    "patientAddress": "patient address"
   },
   "labels": {
     "navbar": {
@@ -14,16 +14,26 @@
         "bg": "BG"
       }
     },
+    "account": "Account",
+    "patientAddress": "Patient Address",
+    "doctorAddress": "Doctor's address",
+    "pharmacyAddress": "Pharmacy Address",
+    "sendPrescription": "Send Prescription",
+    "amount": "Amount",
     "pageNotFound": "OOPS, PAGE NOT FOUND.",
     "copyright": "Copyright © 2021",
     "mitlicense": "Created under the MIT License"
   },
   "buttons": {
     "ok": "OK",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "create": "Create",
+    "send": "Send"
   },
   "errors": {
-
+    "err-patient-address": "The patient address is invalid",
+    "err-pharmacy-address": "The pharmacy address is invalid",
+    "err-doctor-address": "The doctor address is invalid"
   },
   "dialogs": {
     "titles": {
@@ -38,16 +48,25 @@
   },
   "text": {
     "welcome": {
-      "title": "Welcome to our healthcare blockchain demo!",
+      "title1": "Welcome to",
+      "title2": "healthcare blockchain demo!",
       "content": "Log in as a different participant and consider the various functionalities that can be used.",
       "patient": "Patient",
       "doctor": "Doctor",
-      "pharmacie": "Pharmacie",
+      "pharmacy": "Pharmacy",
       "insurer": "Insurer"
     },
     "home": {
-      "title": "Short demo for healthcare blockchain.",
-      "content": "Doctors can make prescriptions.<br/>Patients can recieve online prescription with up to 18 medicines in it.<br/>Pharmacies can check for online prescription and sell the prescribed medicines.<br/>The goal is to avoid medicines fraud.<br/>The doctor can't prescribe medicines for which doesn't have right. For example not legal or too expensive.<br/>Fraudsters not to be able to falsify prescriptons. For examle fake prescriptions with free medicines and sell them after.<br/>Patients not to rewrite prescriptions.<br/>Pharmacies not to lie to the goverment that they have given more free and reduced medicines than they really did."
+      "title": "Demo for healthcare blockchain",
+      "content": "<ul><li>Doctors can make prescriptions.</li><br/><li>Patients can recieve online prescription with up to 18 medicines in it.</li><br/><li>Pharmacies can check for online prescription and sell the prescribed medicines.</li><br/><li>The goal is to avoid medicines fraud.</li><br/><li>The doctor can't prescribe medicines for which doesn't have right. For example not legal or too expensive.</li><br/><li>Fraudsters not to be able to falsify prescriptons. For examle fake prescriptions with free medicines and sell them after.</li><br/><li>Patients not to rewrite prescriptions.</li><br/><li>Pharmacies not to lie to the goverment that they have given more free and reduced medicines than they really did.</li></ul>"
+    },
+    "prescriptions": {
+      "noPrescription": "You have no available prescriptions",
+      "doctor-title": "Create new prescription"
+    },
+    "insurance": {
+      "title-patient": "Send insurance",
+      "createInsurance": "Create insurance"
     }
   },
   "pages": {
