@@ -1,1 +1,11 @@
-/* TODO: delete after if not used */
+.home-content {
+  width: 40rem;
+  left: 20%;
+  margin-left: 5rem;
+  text-align: left !important;
+}
+
+.home-container {
+  line-height: 1.4;
+  text-align: center;
+}

@@ -1,9 +1,11 @@
 <template>
-  <div class="main-container content">
+  <div class="main-container home-container">
     <div class="title">
       {{ $t('text.home.title') }}
     </div>
-    <span v-html="$t('text.home.content')"></span>
+    <div class="home-content">
+      <span v-html="$t('text.home.content')"></span>
+    </div>
   </div>
 </template>
 
@@ -13,8 +15,7 @@ import '../assets/css/home.css';
 export default {
   name: 'Home',
   props: {
-    msg: String
-  }
-}
-
+    msg: String,
+  },
+};
 </script>

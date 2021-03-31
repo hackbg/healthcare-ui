@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import '@/assets/scss/footer.scss';
+import "../../assets/scss/footer.scss";
 
 export default {
   name: 'Footer'

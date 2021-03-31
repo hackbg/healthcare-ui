@@ -42,3 +42,8 @@
   .nav-link:hover {
     color: #fafafa  !important;
   }
+
+.account {
+  color: #9013fe;
+  margin-right: 1rem;
+}

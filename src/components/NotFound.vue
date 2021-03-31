@@ -1,5 +1,5 @@
 <template>
-    <div class="main-container">
+  <div class="main-container">
     <div class="nf not-found-text">{{ $t('labels.pageNotFound') }}</div>
     <div class="nf not-found">404</div>
   </div>
@@ -12,8 +12,7 @@ import '../assets/css/app.css';
 export default {
   name: 'NotFound',
   props: {
-    msg: String
-  }
-}
-
+    msg: String,
+  },
+};
 </script>
