@@ -34,32 +34,6 @@
       </b-table>
       <PrescriptionSend />
     </div>
-
-    <div v-else-if="userType === 'doctor'">
-      <div class="title">
-        {{ $t('text.prescriptions.doctor-title') }}
-      </div>
-      <!-- <input v-model="message" :placeholder="patientAddress" /> -->
-      <form>
-        <b-form-group class="form-control-no-modal"
-            :label="patientAddress"
-            label-for="patient-address-input"
-            :invalid-feedback="errPatientAddr"
-            :state="newPatientState"
-          >
-          <b-form-input list="my-list-id" v-model="newPatient"></b-form-input>
-          <datalist id="my-list-id">
-            <option v-for="patient in patients" v-bind:key="patient.address">{{ patient.name }} - {{ patient.address }}</option>
-          </datalist>
-        </b-form-group>
-      </form>
-      <b-button size="md" variant="primary" @click="newPrescription()">
-        {{ $t('buttons.create') }}
-      </b-button>
-    </div>
-<!-- TODO: andd in languages -->
-    <div v-else-if="userType === 'pharmacy'">Filfuled prescriptions</div>
-  </div>
 </template>
 
 <script>
@@ -69,7 +43,7 @@ import '../assets/css/prescriptions.css';
 import PrescriptionSend from './PrescriptionSend.vue';
 
 export default {
-  name: 'Prescriptions',
+  name: 'PrescriptionsPatient',
   props: {
     msg: String,
   },
@@ -78,7 +52,6 @@ export default {
       newPatient: '',
       newPatientState: null,
       errPatientAddr: this.$i18n.t('errors.err-patient-address'),
-      patientAddress: this.$i18n.t('labels.patientAddress'),
       fields: ['prescriptions', 'medicines', 'expiration_Date', 'send'],
       patients: [{name: "Patient 1", address: "0x111"}, {name: "Patient 2", address: "0x222"}, {name: "Patient 3", address: "0x333"}], // TODO: change after
       prescriptions: [],
@@ -99,9 +72,6 @@ export default {
         prescriptions: 'TODO:',
       });
       this.prescriptions = prescriptions;
-    },
-    async newPrescription() {
-      // TODO:
     },
     openSend() {
       // TODO: open PrescriptionsModal

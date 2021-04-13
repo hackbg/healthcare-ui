@@ -21,7 +21,7 @@
               </div>
           </b-nav-item>
 
-          <b-nav-item v-if="userType === 'patient' || userType === 'insurer'" class="navbar-item" to="/insurance">
+          <b-nav-item v-if="userType === 'patient' || userType === 'insurer' || userType === 'doctor'" class="navbar-item" to="/insurance">
             <div class="navbar-item-text">
               {{ $t('labels.navbar.insurance') }}
             </div>

@@ -1,27 +1,65 @@
-.sign-in {
+.welcome-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 20px;
+  height: 50vh;
+  padding-top: 3rem;
+  padding-bottom: 20rem;
+  grid-template-areas: "first-wl second-wl third-wl fourt-wl";
+}
+
+.wl {
   width: 8rem;
   height: 4rem;
   line-height: 4rem;
   border: 1px solid #9013fe;
   text-align: center;
   color: ivory;
-  margin-top: 5vh;
   border-radius: 5px;
   background-color: #b57ef2;
 }
 
-  .sign-in:hover {
-    transform: scale(1.1);
-    cursor: pointer;
-    background-color: #9013fe;
-  }
+.wl:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+  background-color: #9013fe;
+}
 
-.welcome-grid {
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  height: 50vh;
-  grid-gap: 5rem !important;
+.first-wl {
+  grid-area: first-wl;
+}
+
+.second-wl {
+  grid-area: second-wl;
+}
+
+.third-wl {
+  grid-area: third-wl;
+}
+
+.fourt-wl {
+  grid-area: fourt-wl;
+}
+
+/* Media Queries */
+
+@media (max-width: 700px) {
+  .welcome-container  {
+    grid-template-areas:
+      "first-wl second-wl"
+      "third-wl fourt-wl";
+  }
+}
+
+@media (max-width: 500px) {
+  .welcome-container  {
+    grid-template-areas:
+      "first-wl"
+      "second-wl"
+      "third-wl"
+      "fourt-wl";
+  }
 }
 
 .welcome-logo {
