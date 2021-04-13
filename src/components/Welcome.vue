@@ -8,29 +8,19 @@
       {{ $t('text.welcome.title2') }}
     </div>
       {{ $t('text.welcome.content') }}
-    <div class="welcome-grid">
-      <row :gutter="12">
-        <column :xs="12" :md="3" :lg="3">
-          <div class="sign-in" @click="setPatient()">
-            {{ $t('text.welcome.patient') }}
-          </div>
-        </column>
-        <column :xs="12" :md="3" :lg="3">
-          <div class="sign-in" @click="setDoctor()">
-            {{ $t('text.welcome.doctor') }}
-          </div>
-        </column>
-        <column :xs="12" :md="3" :lg="3">
-          <div class="sign-in" @click="setPharmacy()">
-            {{ $t('text.welcome.pharmacy') }}
-          </div>
-        </column>
-        <column :xs="12" :md="3" :lg="3">
-          <div class="sign-in" @click="setInsurer()">
-            {{ $t('text.welcome.insurer') }}
-          </div>
-        </column>
-      </row>
+    <div class="welcome-container">
+      <div class="first-wl wl" @click="setPatient()">
+        {{ $t('text.welcome.patient') }}
+      </div>
+      <div class="second-wl wl" @click="setDoctor()">
+        {{ $t('text.welcome.doctor') }}
+      </div>
+      <div class="third-wl wl" @click="setPharmacy()">
+        {{ $t('text.welcome.pharmacy') }}
+      </div>
+      <div class="fourt-wl wl" @click="setInsurer()">
+        {{ $t('text.welcome.insurer') }}
+      </div>
     </div>
   </div>
 </template>

@@ -3,6 +3,52 @@
   background-size: cover;
 }
 
+.tb-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 20px;
+  height: 50vh;
+  padding-top: 3rem;
+  padding-bottom: 20rem;
+  grid-template-areas: "first-tb second-tb third-tb fourt-tb";
+}
+
+.first-tb {
+  grid-area: first-tb;
+}
+
+.second-tb {
+  grid-area: second-tb;
+}
+
+.third-tb {
+  grid-area: third-tb;
+}
+
+.fourt-tb {
+  grid-area: fourt-tb;
+}
+
+/* Media Queries */
+
+@media (max-width: 700px) {
+  .welcome-container  {
+    grid-template-areas:
+      "first-tb second-tb third-tb fourt-tb";
+  }
+}
+
+@media (max-width: 500px) {
+  .welcome-container  {
+    grid-template-areas:
+      "first-tb"
+      "second-tb"
+      "third-tb"
+      "fourt-tb";
+  }
+}
+
 .title {
   padding-top: 2rem;
   padding-bottom: 1rem;
@@ -78,6 +124,15 @@
 .simple-input {
   margin-right: 10px;
   padding-bottom: 5px;
+  margin-bottom: 16px;
+}
+
+.btn-tb {
+  margin-bottom: 16px; 
+}
+
+.label-tb {
+  margin-bottom: 8px; 
 }
 
 /* TODO: change .navbar-toggler-icon not working */
