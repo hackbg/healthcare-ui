@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Patient 1",
+    "address": "0xB47F387bE3c49212d212F5c6897DC22e421B8E47"
+  },
+  {
+    "name": "Patient 2",
+    "address": "0x222"
+  },
+  {
+    "name":"Patient 3",
+    "address": "0x333"
+  }
+]
