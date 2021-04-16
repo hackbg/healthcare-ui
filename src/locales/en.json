@@ -58,7 +58,7 @@
     },
     "home": {
       "title": "Demo for healthcare blockchain",
-      "content": "<ul><li>Doctors can make prescriptions.</li><br/><li>Patients can recieve online prescription with up to 18 medicines in it.</li><br/><li>Pharmacies can check for online prescription and sell the prescribed medicines.</li><br/><li>The goal is to avoid medicines fraud.</li><br/><li>The doctor can't prescribe medicines for which doesn't have right. For example not legal or too expensive.</li><br/><li>Fraudsters not to be able to falsify prescriptons. For examle fake prescriptions with free medicines and sell them after.</li><br/><li>Patients not to rewrite prescriptions.</li><br/><li>Pharmacies not to lie to the goverment that they have given more free and reduced medicines than they really did.</li></ul>"
+      "content": "<ul><li>Doctors can make prescriptions.</li><br/><li>Patients can recieve online prescription with up to 18 medicines in it.</li><br/><li>Pharmacies can check for online prescription and sell the prescribed medicines.</li><br/><li>The goal is to avoid medicines fraud.</li><br/><li>The doctor can't prescribe medicines for which doesn't have right. For example not legal or too expensive.</li><br/><li>Fraudsters not to be able to falsify prescriptons. For examle fake prescriptions with free medicines and sell them after.</li><br/><li>Patients not to rewrite prescriptions.</li><br/><li>Pharmacies not to lie to the goverment that they have given more free and reduced medicines than they realy did.</li></ul>"
     },
     "prescriptions": {
       "noPrescription": "You have no available prescriptions",
