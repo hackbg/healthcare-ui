@@ -8,9 +8,6 @@
   justify-content: center;
   align-items: center;
   grid-gap: 20px;
-  height: 50vh;
-  padding-top: 3rem;
-  padding-bottom: 20rem;
   grid-template-areas: "first-tb second-tb third-tb fourt-tb";
 }
 
@@ -33,14 +30,14 @@
 /* Media Queries */
 
 @media (max-width: 700px) {
-  .welcome-container  {
+  .tb-container  {
     grid-template-areas:
       "first-tb second-tb third-tb fourt-tb";
   }
 }
 
 @media (max-width: 500px) {
-  .welcome-container  {
+  .tb-container  {
     grid-template-areas:
       "first-tb"
       "second-tb"
@@ -133,6 +130,14 @@
 
 .label-tb {
   margin-bottom: 8px; 
+}
+
+.multiselect-tb {
+  margin-bottom: 1rem;
+}
+
+.multiselect__tag {
+  background: #b57ef2 !important;;
 }
 
 /* TODO: change .navbar-toggler-icon not working */

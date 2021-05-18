@@ -3,8 +3,9 @@
     <p v-if="prescriptions.length == 0" class="no-prescriptions">
       {{ $t('text.prescriptions.noPrescription') }}
     </p>
+    <div v-else>
+      <b-button @click="getPrescriptions">Test</b-button>
     <b-table
-      v-else
       class="main-table-style table-prescriptions"
       striped
       hover
@@ -31,6 +32,7 @@
         </span> -->
       </template>
     </b-table>
+    </div>
     <PrescriptionSend />
   </div>
 </template>
@@ -43,6 +45,8 @@ import patientsData from '../data/patients.json';
 import '../assets/css/prescriptions.css';
 import PrescriptionSend from './PrescriptionSend.vue';
 import PrescriptionsABI from '../web3/prescriptionsABI';
+import MedicinesABI from '../web3/medicinesABI';
+
 
 export default {
   name: 'PrescriptionsPatient',
@@ -74,6 +78,18 @@ export default {
 
       // tokenId = await prescriptionInstance.tokenOfOwnerByIndex(patient, 0);
       // await prescriptionInstance.ownerOf(tokenId);
+      let tokenId;
+      const account = window.web3.currentProvider.selectedAddress;
+      console.log('patient address');
+      console.log(account);
+      console.log('prescriptions');
+      const accPrescriptions = await PrescriptionsABI.getContract().methods.balanceOf(account).call();
+      console.log(accPrescriptions);
+      for(let i = 0; i <= accPrescriptions; i++) {
+        tokenId = await PrescriptionsABI.getContract().methods.tokenOfOwnerByIndex(account, i).call();
+        console.log(tokenId);
+      }
+
       prescriptions.push({
         prescriptions: 'TODO:',
       });

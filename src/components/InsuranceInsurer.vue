@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import patientsData from '../data/patients.json';
 import web3 from "../web3/web3";
 import InsuranceABI from '../web3/insuranceABI';
@@ -58,7 +59,13 @@ export default {
         console.log(res.transactionHash);
       }
       catch(ex) {
-        console.log(ex); // TODO: label or toast
+        Vue.$toast.open({
+        message: ex,
+        type: 'error',
+        duration: 3000,
+        pauseOnHover: true,
+        position: 'top-right',
+    });
       }
     }
   },

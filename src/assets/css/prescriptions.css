@@ -17,3 +17,55 @@
 .table-prescriptions tr th:nth-child(4){
   width: 5%;
 }
+
+.ps-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 20px;
+  grid-template-areas: "first-ps second-ps third-ps fourt-ps";
+}
+
+.first-ps {
+  grid-area: first-ps;
+}
+
+.second-ps {
+  grid-area: second-ps;
+}
+
+.third-ps {
+  grid-area: third-ps;
+}
+
+.fourt-ps {
+  grid-area: fourt-ps;
+}
+
+
+/* Media Queries */
+
+@media (max-width: 700px) {
+  .ps-container  {
+    grid-template-areas:
+      "first-ps second-ps third-ps fourt-ps";
+  }
+}
+
+@media (max-width: 500px) {
+  .ps-container  {
+    grid-template-areas:
+      "first-ps"
+      "second-ps"
+      "third-ps"
+      "fourt-ps";
+  }
+}
+
+.lbl-prescription-expiration {
+  margin-bottom: 1rem;
+}
+
+.date-time-picker {
+  margin-bottom: 2rem;
+}

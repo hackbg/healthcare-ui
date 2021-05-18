@@ -28,8 +28,10 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import web3 from "../web3/web3";
 import InsuranceABI from '../web3/insuranceABI';
+import doctorsData from '../data/doctors.json';
 
 export default {
   name: 'InsurancePatient',
@@ -44,7 +46,7 @@ export default {
       amountLbl: this.$i18n.t('labels.amount'),
       insuranceAmmount: '',
       transactionURL: '',
-      doctors: [{name: "Doctor 1", address: "0x047012d0BEed73E5efA757274d327915cD1522f8"}, {name: "Doctor 2", address: "0x222"}, {name: "Doctor 3", address: "0x333"}] // TODO: change after
+      doctors: doctorsData
     };
   },
   methods: {
@@ -57,7 +59,13 @@ export default {
         console.log(res.transactionHash);
       }
       catch(ex) {
-        console.log(ex); // TODO: label or toast
+        Vue.$toast.open({
+        message: ex,
+        type: 'error',
+        duration: 3000,
+        pauseOnHover: true,
+        position: 'top-right',
+    });
       }
     }
   }
