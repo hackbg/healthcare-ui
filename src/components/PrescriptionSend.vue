@@ -29,6 +29,7 @@
 // import web3 from "../web3/web3";
 import abi from '../web3/prescriptionsABI';
 import '../assets/css/app.css';
+import pharmaciesData from '../data/pharmacies.json';
 
 export default {
   name: 'PrescriptionSend',
@@ -42,7 +43,7 @@ export default {
       errPharmacyAddr: this.$i18n.t('errors.err-pharmacy-address'),
       newPharmacy: '',
       newPharmacyState: null,
-      pharmacies: [{name: "Apteka 1", address: "0x111"}, {name: "Apteka 2", address: "0x222"}, {name: "Apteka 3", address: "0x333"}] // TODO: change after
+      pharmacies: pharmaciesData
     };
   },
   methods: {

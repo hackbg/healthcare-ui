@@ -4,7 +4,9 @@
       {{ $t('text.home.title') }}
     </div>
     <div class="home-content">
-      <span v-html="$t('text.home.content')"></span>
+      <div class="first-hm">
+        <span v-html="$t('text.home.content')"></span>
+      </div>
     </div>
   </div>
 </template>

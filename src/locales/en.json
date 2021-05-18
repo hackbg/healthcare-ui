@@ -22,7 +22,9 @@
     "amount": "Amount",
     "pageNotFound": "OOPS, PAGE NOT FOUND.",
     "copyright": "Copyright © 2021",
-    "mitlicense": "Created under the MIT License"
+    "mitlicense": "Created under the MIT License",
+    "add-medicine": "Search or add medicine",
+    "expiration-date": "Prescription expiration date"
   },
   "buttons": {
     "ok": "OK",
@@ -40,7 +42,9 @@
       "success": "Success!"
     },
     "messages": {
-
+      "select-valid-patient-addr": "Please, select valid patient address",
+      "select-valid-prescription": "Please, select valid prescriptions",
+      "select-valid-date": "Please, select valid date"
     }
   },
   "menu": {

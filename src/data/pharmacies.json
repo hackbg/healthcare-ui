@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Apteka 1",
+    "address": "0x111"
+  },
+  {
+    "name": "Apteka 2",
+    "address": "0x222"
+  },
+  {
+    "name": "Apteka 3",
+    "address": "0x333"
+  }
+]
