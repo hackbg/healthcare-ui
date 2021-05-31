@@ -8,7 +8,7 @@
       {{ $t('text.prescriptions.noPrescription') }}
     </p>
     <div v-else>
-      <b-button @click="getPrescriptions">Test</b-button>
+      <b-button @click="getFulfilledPrescriptions">Test</b-button>
     <b-table
       class="main-table-style table-prescriptions"
       striped

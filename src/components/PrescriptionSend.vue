@@ -26,7 +26,7 @@
 </template>
 
 <script>
-// import web3 from "../web3/web3";
+import web3 from "../web3/web3";
 import abi from '../web3/prescriptionsABI';
 import '../assets/css/app.css';
 import pharmaciesData from '../data/pharmacies.json';
@@ -78,7 +78,11 @@ export default {
       if(this.newPharmacy.includes(' - ')) {
         address = this.newPharmacy.split(' - ')[1];
       }
-      await abi.approve(address, this.tokenID);
+      console.log('address');
+      console.log(address);
+      console.log('token');
+      console.log(this.tokenID);
+      abi.getContract().methods.approve(address, Number(this.tokenID)).send({ from: web3.currentProvider.selectedAddress }); // TODO: removed await because the modal doesn't close but is not the best desicion...to think about it
       // abi.changeAddress(this.newWallet);
       // this.getWallets();
       // Hide the modal manually

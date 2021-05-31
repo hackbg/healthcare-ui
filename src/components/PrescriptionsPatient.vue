@@ -4,7 +4,6 @@
       {{ $t('text.prescriptions.noPrescription') }}
     </p>
     <div v-else>
-      <b-button @click="getPrescriptions">Test</b-button>
     <b-table
       class="main-table-style table-prescriptions"
       striped
@@ -16,6 +15,7 @@
         <!-- <b-button v-if="row.item.send" TODO: change it after with that-->
         <b-button
           v-if="!row.item.send"
+          @click="selectedId = row.item.prescriptions"
           v-b-modal="'prescription-send'"
           size="sm"
           variant="primary"
@@ -33,7 +33,7 @@
       </template>
     </b-table>
     </div>
-    <PrescriptionSend />
+    <PrescriptionSend :tokenID="selectedId"/>
   </div>
 </template>
 
@@ -61,6 +61,7 @@ export default {
       fields: ['prescriptions', 'medicines', 'expiration_Date', 'send'],
       patients: patientsData,
       prescriptions: [],
+      selectedId: '',
     };
   },
   components: {
@@ -74,25 +75,19 @@ export default {
   methods: {
     async getPrescriptions() {
       const prescriptions = [];
-      //await PrescriptionsABI.getContract().methods.createInsurance(amount, patient).send({ from: web3.currentProvider.selectedAddress });
-
-      // tokenId = await prescriptionInstance.tokenOfOwnerByIndex(patient, 0);
-      // await prescriptionInstance.ownerOf(tokenId);
-      let tokenId;
       const account = window.web3.currentProvider.selectedAddress;
-      console.log('patient address');
-      console.log(account);
-      console.log('prescriptions');
       const accPrescriptions = await PrescriptionsABI.getContract().methods.balanceOf(account).call();
-      console.log(accPrescriptions);
-      for(let i = 0; i <= accPrescriptions; i++) {
-        tokenId = await PrescriptionsABI.getContract().methods.tokenOfOwnerByIndex(account, i).call();
-        console.log(tokenId);
+      for(let i = 0; i < accPrescriptions; i++) {
+        const tokenId = await PrescriptionsABI.getContract().methods.tokenOfOwnerByIndex(account, i).call();
+        const medicines = await PrescriptionsABI.getContract().methods.tokenURI(tokenId).call();
+        const expire = await PrescriptionsABI.getContract().methods.expire(tokenId).call();
+        prescriptions.push({
+          prescriptions: tokenId,
+          medicines: medicines,
+          expiration_Date: new Date(Number(expire)).toDateString(),
+        });
       }
 
-      prescriptions.push({
-        prescriptions: 'TODO:',
-      });
       this.prescriptions = prescriptions;
     },
   },
