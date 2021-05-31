@@ -115,9 +115,9 @@ export default {
       }
 
       try {
-        const res = await PrescriptionsABI.getContract().methods.createPrescription(prescriptionMeds, patient, this.selectedDate).send({ from: web3.currentProvider.selectedAddress });
+        const res = await PrescriptionsABI.getContract().methods.createPrescription(prescriptionMeds.join(','), patient, this.selectedDate).send({ from: web3.currentProvider.selectedAddress });
         this.transactionURL =  `https://ropsten.etherscan.io/tx/${res.transactionHash}`;
-        const transactionHash = `transaction hash: ${res.transactionHash}`
+        const transactionHash = `transaction hash: ${res.transactionHash}`;
         Vue.$toast.open({
           message: transactionHash,
           type: 'success',
