@@ -16,7 +16,7 @@
     },
     "account": "Account",
     "patientAddress": "Patient Address",
-    "doctorAddress": "Doctor's address",
+    "doctorAddress": "Doctor's Address",
     "pharmacyAddress": "Pharmacy Address",
     "sendPrescription": "Send Prescription",
     "amount": "Amount",
@@ -30,7 +30,8 @@
     "ok": "OK",
     "cancel": "Cancel",
     "create": "Create",
-    "send": "Send"
+    "send": "Send",
+    "accept": "Accept"
   },
   "errors": {
     "err-patient-address": "The patient address is invalid",
@@ -43,7 +44,7 @@
     },
     "messages": {
       "select-valid-patient-addr": "Please, select valid patient address",
-      "select-valid-prescription": "Please, select valid prescriptions",
+      "select-valid-medicine": "Please, select valid medicine",
       "select-valid-date": "Please, select valid date"
     }
   },
@@ -71,6 +72,10 @@
     "insurance": {
       "title-patient": "Send insurance",
       "createInsurance": "Create insurance"
+    },
+    "pharmacy": {
+      "title1": "Unfulfilled prescriptions",
+      "title2": "Fulfilled prescriptions"
     }
   },
   "pages": {

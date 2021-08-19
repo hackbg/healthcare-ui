@@ -92,7 +92,7 @@ export default {
         return;
       }
       else if(prescriptionMeds.length === 0) {
-        const msg = this.$i18n.t('dialogs.messages.select-valid-prescription');
+        const msg = this.$i18n.t('dialogs.messages.select-valid-medicine');
         Vue.$toast.open({
           message: msg,
           type: 'error',
@@ -139,11 +139,8 @@ export default {
 
     onContext(ctx) {
       console.log('context'); //TODO: 
-      console.log(this.context = ctx);
-      console.log('selecteddate:');
-      console.log(new Date(ctx.activeDate) - new Date());
+      this.context = ctx;
       this.selectedDate = Math.ceil(new Date(ctx.activeDate) - new Date()/1000) + 24*60*60; //TODO: check the math
-      console.log(this.selectedDate);
     },
 
   },

@@ -31,16 +31,16 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-form class="account">{{ $t('labels.account') }}: {{userType || ''}}</b-nav-form> 
-
-          <b-nav-item-dropdown class="navbar-item" text="Lang" right>
-            <b-nav-item class="navbar-item" href="#">
+          <language-switcher></language-switcher>
+          <!-- <b-nav-item-dropdown class="navbar-item" text="Lang" right>
+            <b-nav-item class="navbar-item" href="#" @click="function1">
               {{ $t('labels.navbar.language.en') }}
             </b-nav-item >
 
             <b-nav-item class="navbar-item" href="#">
               {{ $t('labels.navbar.language.bg') }}
             </b-nav-item >     
-          </b-nav-item-dropdown>
+          </b-nav-item-dropdown> -->
 
           <b-nav-item v-if="userType !== undefined" class="navbar-item" @click="signOut()">
               <div class="navbar-item-text">
@@ -59,10 +59,11 @@
 </template>
 
 <script>
+import LanguageSwitcher from '../LanguageSwitcher.vue';
 import '../../assets/css/navbar.css';
-// import web3 from "../../web3/web3";
 
 export default {
+  components: { LanguageSwitcher },
   name: 'Navbar',
   props: {
     msg: String
@@ -82,6 +83,9 @@ export default {
       this.$store.commit('userType', undefined);
       if(this.$route.path !== '/')
         this.$router.push('/');
+    },
+    function1() {
+      alert('Test1');
     }
   }
 }
