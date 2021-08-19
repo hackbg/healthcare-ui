@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import web3 from "../web3/web3";
 import prescriptionsABI from '../web3/prescriptionsABI';
 import '../assets/css/app.css';
@@ -78,7 +79,26 @@ export default {
       if(this.newPharmacy.includes(' - ')) {
         address = this.newPharmacy.split(' - ')[1];
       }
-      prescriptionsABI.getContract().methods.approve(address, Number(this.tokenID)).send({ from: web3.currentProvider.selectedAddress }); // TODO: removed await because the modal doesn't close but is not the best desicion...to think about it
+      try {
+        const res = prescriptionsABI.getContract().methods.approve(address, Number(this.tokenID)).send({ from: web3.currentProvider.selectedAddress }); // TODO: removed await because the modal doesn't close but is not the best desicion...to think about it
+        const transactionHash = `transaction hash: ${res.transactionHash}`;
+        Vue.$toast.open({
+          message: transactionHash,
+          type: 'success',
+          duration: 3000,
+          pauseOnHover: true,
+          position: 'top-right',
+        });
+      }
+      catch(ex) {
+        Vue.$toast.open({
+          message: ex,
+          type: 'error',
+          duration: 3000,
+          pauseOnHover: true,
+          position: 'top-right',
+        });
+      }
       // prescriptionsABI.changeAddress(this.newWallet);
       // this.getWallets();
       // Hide the modal manually

@@ -14,7 +14,7 @@
       {{ $t('text.pharmacy.title2') }}
     </div>
 
-    <p v-if="prescriptionsFulfilled.length === 0" class="no-prescriptions"> <!-- TODO: change it after with equal -->
+    <p v-if="prescriptionsFulfilled.length === 0" class="no-prescriptions">
       {{ $t('text.prescriptions.noPrescription') }}
     </p>
     <div v-else>
@@ -33,7 +33,6 @@
 
 <script>
 /* eslint-disable */
-import Vue from 'vue';
 import PrescriptionsABI from '../web3/prescriptionsABI';
 import '../assets/css/prescriptions.css';
 
@@ -84,76 +83,12 @@ export default {
 
       this.prescriptionsFulfilled = prescriptions;
     },
-
-    async getUnfulfilledPrescriptions() { // TODO:
-      const prescriptions = [];
-      // await PrescriptionsABI.getContract().methods.createInsurance(amount, patient).send({ from: web3.currentProvider.selectedAddress });
-
-      // tokenId = await prescriptionInstance.tokenOfOwnerByIndex(patient, 0);
-      // await prescriptionInstance.ownerOf(tokenId);
-      // let tokenId;
-      const account = window.web3.currentProvider.selectedAddress;
-      console.log('pharmacy address');
-      console.log(account);
-      console.log('prescriptions');
-      // const accPrescriptions = await PrescriptionsABI.getContract().methods.balanceOf(account).call();
-      // console.log(accPrescriptions);
-      // for(let i = 0; i <= accPrescriptions; i++) {
-      //   tokenId = await PrescriptionsABI.getContract().methods.tokenOfOwnerByIndex(account, i).call();
-      //   console.log(tokenId);
-      // }
-
-      prescriptions.push({
-        prescriptions: 'TODO: 1',
-        medicines: 'analgin',
-        expiration_Date: '02.11.2022',
-      });
-      this.prescriptionsWaiting = prescriptions; // TODO: uncoment after
-    },
-
-    // async getFulfilledPrescriptions() { // TODO:
-    //   const prescriptions = [];
-    //   // await PrescriptionsABI.getContract().methods.createInsurance(amount, patient).send({ from: web3.currentProvider.selectedAddress });
-
-    //   // tokenId = await prescriptionInstance.tokenOfOwnerByIndex(patient, 0);
-    //   // await prescriptionInstance.ownerOf(tokenId);
-    //   // let tokenId;
-    //   const account = window.web3.currentProvider.selectedAddress;
-    //   console.log('pharmacy address');
-    //   console.log(account);
-    //   console.log('prescriptions');
-    //   // const accPrescriptions = await PrescriptionsABI.getContract().methods.balanceOf(account).call();
-    //   // console.log(accPrescriptions);
-    //   // for(let i = 0; i <= accPrescriptions; i++) {
-    //   //   tokenId = await PrescriptionsABI.getContract().methods.tokenOfOwnerByIndex(account, i).call();
-    //   //   console.log(tokenId);
-    //   // }
-
-    //   prescriptions.push({
-    //     prescriptions: 'TODO:',
-    //     medicines: 'aspirin',
-    //     expiration_Date: '01.01.2022',
-    //   });
-    //   this.prescriptionsFulfilled = prescriptions; // TODO: uncoment after
-    // },
-
-    sendPrescription(prescription) {
-      console.log('prescription');
-      console.log(prescription);
-      Vue.$toast.open({
-          message: 'TODO:!!!',
-          type: 'success',
-          duration: 3000,
-          pauseOnHover: true,
-          position: 'top-right',
-        });
-    }
   },
 
   async created() {
     this.patientAddress = 'Patient Address';
     await this.getFulfilledPrescriptions();
-    await this.getUnfulfilledPrescriptions();
+    setInterval(this.getFulfilledPrescriptions, 10000);
   },
 };
 </script>
