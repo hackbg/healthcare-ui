@@ -38,6 +38,7 @@
 
 <script>
 /* eslint-disable */
+import Vue from 'vue';
 import '../assets/css/prescriptions.css';
 import PrescriptionSend from './PrescriptionSend.vue';
 import PrescriptionsABI from '../web3/prescriptionsABI';
@@ -87,7 +88,26 @@ export default {
     },
 
     async revertSend(tokenID) {
-      PrescriptionsABI.getContract().methods.approve("0x0000000000000000000000000000000000000000", Number(tokenID)).send({ from: web3.currentProvider.selectedAddress });
+      try {
+        const res = PrescriptionsABI.getContract().methods.approve("0x0000000000000000000000000000000000000000", Number(tokenID)).send({ from: web3.currentProvider.selectedAddress });
+        const transactionHash = `transaction hash: ${res.transactionHash}`;
+        Vue.$toast.open({
+          message: transactionHash,
+          type: 'success',
+          duration: 3000,
+          pauseOnHover: true,
+          position: 'top-right',
+        });
+      }
+      catch(ex) {
+        Vue.$toast.open({
+          message: ex,
+          type: 'error',
+          duration: 3000,
+          pauseOnHover: true,
+          position: 'top-right',
+        });
+      }
     },
   },
   async created() {
