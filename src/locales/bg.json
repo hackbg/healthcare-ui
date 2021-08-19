@@ -1,0 +1,107 @@
+{
+  "fields": {
+    "patientAddress": "адрес на пациент"
+  },
+  "labels": {
+    "navbar": {
+      "healthcare": "Здравеопазване",
+      "insurance": "Застраховка",
+      "prescriptions": "Рецепти",
+      "signout": "Изход",
+      "signin": "Вход",
+      "language": {
+        "en": "EN",
+        "bg": "BG"
+      }
+    },
+    "account": "Акаунт",
+    "patientAddress": "Адрес на Пациент",
+    "doctorAddress": "Адрес на Доктор",
+    "pharmacyAddress": "Адрес на Аптека",
+    "sendPrescription": "Изпрати Рецепта",
+    "amount": "Обща Сума",
+    "pageNotFound": "OOPS, PAGE NOT FOUND.",
+    "copyright": "Copyright © 2021",
+    "mitlicense": "Създадено под лиценза MIT",
+    "add-medicine": "Потърси или добави лекарство",
+    "expiration-date": "Ден на изтичане на рецепта"
+  },
+  "buttons": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "create": "Create",
+    "send": "Send",
+    "accept": "Изпълни"
+  },
+  "errors": {
+    "err-patient-address": "Адресът на пациента не е валиден",
+    "err-pharmacy-address": "Адресът на аптеката не е валиден",
+    "err-doctor-address": "Адресът на доктора не е валиден"
+  },
+  "dialogs": {
+    "titles": {
+      "success": "Изпълнено!"
+    },
+    "messages": {
+      "select-valid-patient-addr": "Моля изберете валиден адрес на пациент",
+      "select-valid-medicine": "Моля изберете валидно лекарство",
+      "select-valid-date": "Моля изберете валидна дата"
+    }
+  },
+  "menu": {
+
+  },
+  "text": {
+    "welcome": {
+      "title1": "Добре дошли в",
+      "title2": "демо блокчейна за здравеопазване!",
+      "content": "Влезте в системата като различен участник и разгледайте различните функционалности, които могат да бъдат използвани.",
+      "patient": "Пациент",
+      "doctor": "Доктор",
+      "pharmacy": "Аптека",
+      "insurer": "Застраховател"
+    },
+    "home": {
+      "title": "Демо блокчейн за здравеопазване",
+      "content": "<ul><li>Докторите могат да издават рецепти.</li><br/><li>Пациентите могат да получават онлайн рецепти с до 18 лекарства в рецепта.</li><br/><li>Аптеките могат да проверят за онлайн рецепти и да продават предписаните лекарства.</li><br/><li>Целта е да се избегнат медицински измами.</li><br/><li>Докторът не може да предписва лекарства, които няма право. Примерно нелегални или прекалено скъпи лекарства.</li><br/><li>Измамниците са неспособни да фалшифицират рецепти. Примерно фалшиви рецепти с безплатни лекарства, коити после да продават.</li><br/><li>Пациентите не могат да поправят рецепти.</li><br/><li>Аптеките не могат да лъжат правителството, че са дали повече безплатни и намалени лекарства от колкото наистина са.</li></ul>"
+    },
+    "prescriptions": {
+      "noPrescription": "Няма налични рецепти",
+      "doctor-title": "Създай на нова рецепта"
+    },
+    "insurance": {
+      "title-patient": "Изпрати застраховка",
+      "createInsurance": "Създай нова застраховка"
+    },
+    "pharmacy": {
+      "title1": "Входящи, необработени рецепти",
+      "title2": "Изпълнени рецепти"
+    }
+  },
+  "pages": {
+    "footer": {
+      "title": "Footer"
+    },
+    "navbar": {
+      "title": "Navigation Menu"
+    },
+    "home": {
+      "title": "Home"
+    },
+    "insurance": {
+      "title": "Insurance"
+    },
+    "notfound": {
+      "title": "Not Found"
+    },
+    "recepieNew": {
+      "title": "New Recepie"
+    },
+    "recepies": {
+      "title": "Recepies"
+    },
+    "welcome": {
+      "title": "Welcome"
+    }
+  }
+}

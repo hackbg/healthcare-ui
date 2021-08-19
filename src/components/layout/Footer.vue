@@ -5,7 +5,13 @@
         <span>{{ $t('labels.copyright') }}</span>
       </div>
       <div class="footer__center">
-        <a href="https://hack.bg"><img class="footer__logo" src="@/assets/img/hack-logo.png"/></a>
+        <a
+          href="https://hack.bg"
+          target="_blank"
+          class="nav__link"
+        >
+          <img class="footer__logo" src="@/assets/img/hack-logo.png"/>
+        </a>
       </div>
       <div class="footer__right">
         <span>{{ $t('labels.mitlicense') }}</span>
@@ -14,8 +20,8 @@
           target="_blank"
           class="nav__link"
         >
-        <img class="footer__icon" src="@/assets/img/github-logo.png"/>
-      </a>
+          <img class="footer__icon" src="@/assets/img/github-logo.png"/>
+        </a>
       </div>
     </div>
   </footer>
@@ -28,4 +34,3 @@ export default {
   name: 'Footer'
 };
 </script>
-

@@ -29,7 +29,7 @@ Account 2 - Insurer
 Account 3 - Patient  
 Accounr 4 - Pharmacy
 
-## Abour Healthcare
+## About Healthcare
 
 * Insurance company could have smartcontracts in a blockchain with added walet addresses for all insurers in the company and all the hospitals and emergency medical services(common walet for the whole hospital, instead separate for each doctor) or the doctors working in it.  
   
