@@ -12,12 +12,12 @@
             :invalid-feedback="errPatientAddr"
             :state="newPatientState"
           >
-          <b-form-input list="patient-address" v-model="newPatient"></b-form-input>
+          <b-form-input list="patient-address" class="input-main" v-model="newPatient"></b-form-input>
           <datalist id="patient-address">
             <option v-for="patient in patients" v-bind:key="patient.address">{{ patient.name }} - {{ patient.address }}</option>
           </datalist>
         </b-form-group>
-        <input v-model="insuranceAmmount" :placeholder="amountLbl" class="simple-input third-tb"/>
+        <input v-model="insuranceAmmount" :placeholder="amountLbl" class="simple-input input-main third-tb"/>
         <b-button class="fourt-tb btn-tb" size="md" variant="primary" @click="createInsurance">
           {{ $t('buttons.send') }}
         </b-button>
@@ -56,7 +56,7 @@ export default {
       try {
         const res = await InsuranceABI.getContract().methods.createInsurance(amount, patient).send({ from: web3.currentProvider.selectedAddress });
         this.transactionURL =  `https://ropsten.etherscan.io/tx/${res.transactionHash}`;
-        console.log(res.transactionHash);
+        // console.log(res.transactionHash);
       }
       catch(ex) {
         Vue.$toast.open({

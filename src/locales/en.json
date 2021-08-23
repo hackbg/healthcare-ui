@@ -24,14 +24,16 @@
     "copyright": "Copyright © 2021",
     "mitlicense": "Created under the MIT License",
     "add-medicine": "Search or add medicine",
-    "expiration-date": "Prescription expiration date"
+    "expiration-date": "Prescription expiration date",
+    "prescriptionsTokenId": "Prescriptions token id:"
   },
   "buttons": {
     "ok": "OK",
     "cancel": "Cancel",
     "create": "Create",
     "send": "Send",
-    "accept": "Accept"
+    "accept": "Accept",
+    "revert": "Revert"
   },
   "errors": {
     "err-patient-address": "The patient address is invalid",

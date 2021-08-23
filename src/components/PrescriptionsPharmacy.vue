@@ -5,10 +5,15 @@
       {{ $t('text.pharmacy.title1') }}
     </div>
 
-    <input v-model="prescriptionsTokenId" :placeholder="prescriptionsTokenIdLbl" class="simple-input third-tb"/>
-    <b-button class="fourt-tb btn-tb" size="md" variant="primary" @click="recievedPrescription">
-      {{ $t('buttons.send') }}
-    </b-button>
+    <div class="tb-container">
+      <div class="first-tb label-tb">
+          {{ $t('labels.prescriptionsTokenId') }}:
+        </div>
+      <input v-model="prescriptionsTokenId" :placeholder="prescriptionsTokenIdLbl" class="simple-input input-main second-tb"/>
+      <b-button class="third-tb btn-tb" size="md" variant="primary" @click="receivedPrescription">
+        {{ $t('buttons.send') }}
+      </b-button>
+    </div>
 
     <div class="title">
       {{ $t('text.pharmacy.title2') }}
@@ -57,12 +62,12 @@ export default {
     },
   },
   methods: {
-    async recievedPrescription() {
+    async receivedPrescription() {
       const account = window.web3.currentProvider.selectedAddress;
       const address = await PrescriptionsABI.getContract().methods.ownerOf(this.prescriptionsTokenId).call();
-      console.log(address);
-      const approved = await PrescriptionsABI.getContract().methods.getApproved(this.prescriptionsTokenId).call()
-      console.log(approved);
+      // console.log(address);
+      // const approved = await PrescriptionsABI.getContract().methods.getApproved(this.prescriptionsTokenId).call()
+      // console.log(approved);
       await PrescriptionsABI.getContract().methods.transferFrom(address, account, Number(this.prescriptionsTokenId)).send({ from: account });
     },
 
@@ -70,6 +75,7 @@ export default {
       const prescriptions = [];
       const account = window.web3.currentProvider.selectedAddress;
       const accPrescriptions = await PrescriptionsABI.getContract().methods.balanceOf(account).call();
+
       for(let i = 0; i < accPrescriptions; i++) {
         const tokenId = await PrescriptionsABI.getContract().methods.tokenOfOwnerByIndex(account, i).call();
         const medicines = await PrescriptionsABI.getContract().methods.tokenURI(tokenId).call();
