@@ -12,13 +12,13 @@
             :invalid-feedback="errPatientAddr"
             :state="newPatientState"
           >
-          <b-form-input list="patient-prescription" v-model="newPatient"></b-form-input>
+          <b-form-input list="patient-prescription" v-model="newPatient" class="input-main"></b-form-input>
           <datalist id="patient-prescription">
             <option v-for="patient in patients" v-bind:key="patient.address">{{ patient.name }} - {{ patient.address }}</option>
           </datalist>
           </b-form-group>
           <div class="third-ps">
-            <multiselect v-model="value" class="multiselect-tb" tag-placeholder="Add this as new tag" :placeholder="addMedicineLbl" label="name" track-by="code" :options="medicines" :multiple="true"></multiselect>
+            <multiselect v-model="value" class="multiselect-tb input-main" tag-placeholder="Add this as new tag" :placeholder="addMedicineLbl" label="name" track-by="code" :options="medicines" :multiple="true"></multiselect>
           </div>
           <b-button size="md" class="fourt-ps btn-tb" variant="primary" @click="newPrescription">
           {{ $t('buttons.create') }}

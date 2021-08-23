@@ -49,7 +49,7 @@
 .title {
   padding-top: 2rem;
   padding-bottom: 1rem;
-  color: #9013fe;
+  color: #832DF4;
   font-size: 20px;
 }
 
@@ -72,7 +72,7 @@
   width: 99% !important;
   margin-left: 0.5%;
   margin-right: 0.5%;
-  background-color: #b57ef2 !important;
+  background-color: #AC82EB !important;
   opacity: 0.5;
   color: ivory !important;
   opacity: 0.9;
@@ -80,17 +80,25 @@
 }
 
 .btn-primary {
-  background-color: #9013fe !important;
+  background-color: #832DF4 !important;
   border: 1px solid #6635a6 !important;
 }
 
   .btn-primary:hover {
     background-color: #af59be !important;
-    border: 1px solid #9013fe !important;
+    border: 1px solid #832DF4 !important;
     transform: scale(1.1);
   }
 
+  .btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgb(131, 45, 244, 45%) !important;
+  }
+
   .btn-secondary:hover {
+    transform: scale(1.1) !important;
+  }
+
+  .btn-danger:hover {
     transform: scale(1.1) !important;
   }
 
@@ -132,15 +140,68 @@
   margin-bottom: 8px; 
 }
 
+.multiselect {
+  height: 38px;
+}
+
 .multiselect-tb {
   margin-bottom: 1rem;
+  height: 38px;
+}
+
+.multiselect__tags {
+  height: 38px;
 }
 
 .multiselect__tag {
   background: #b57ef2 !important;;
 }
 
+.multiselect__tag-icon:hover {
+  background-color: #832DF4 !important;
+}
+
 /* TODO: change .navbar-toggler-icon not working */
 .navbar-toggler-icon { 
-  background-color:#9013fe !important;
+  background-color: #832DF4 !important;
 }
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #AC82EB;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #AC82EB;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #AC82EB;
+}
+
+.multiselect__placeholder {
+  color: #AC82EB !important;
+}
+
+.input-main {
+  border: 1px solid #832DF4 !important;
+  border-radius: 0.25rem !important;
+}
+
+  .input-main:focus {
+    box-shadow: 0 0 0 0.2rem rgb(172, 130, 235, 48%) !important;
+    outline: none !important;
+  }
+
+  .btn-outline-primary.disabled, .btn-outline-primary:disabled {
+    color: #832DF4 !important;
+    font-weight: bold !important;
+  }
+
+.form-control {
+  border: 1px solid #832DF4 !important;
+}
+
+/* .border-top {
+  border-top: 1px solid #832DF4 !important;
+} */

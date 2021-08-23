@@ -37,5 +37,14 @@ export default {
     margin-left: 2px;
     margin-right: 2px;
   }
+
+    .language-button:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    .language-button:active {
+      background-color: transparent !important;
+    }
 }
 </style>

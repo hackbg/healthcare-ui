@@ -15,7 +15,7 @@
           invalid-feedback="errPharmacyAddr"
           :state="newPharmacyState"
         >
-          <b-form-input list="my-list-id" v-model="newPharmacy"></b-form-input>
+          <b-form-input list="my-list-id" v-model="newPharmacy" class="input-main"></b-form-input>
           <datalist id="my-list-id">
             <option v-for="pharmacy in pharmacies" v-bind:key="pharmacy.address">{{ pharmacy.name }} - {{ pharmacy.address }}</option>
           </datalist>

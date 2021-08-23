@@ -23,8 +23,13 @@
           {{ $t('buttons.send') }}
         </b-button>
         <!-- TODO: finish after -->
-        <b-button v-else size="sm" variant="danger" @click="revertSend(row.item.prescriptions)" class="btn-table">
-          Revert
+        <b-button
+          v-else size="sm"
+          variant="danger"
+          @click="revertSend(row.item.prescriptions)"
+          class="btn-table"
+        >
+          {{ $t('buttons.revert') }}
         </b-button>
         <!-- <span else>
           Executed
@@ -75,7 +80,7 @@ export default {
         const medicines = await PrescriptionsABI.getContract().methods.tokenURI(tokenId).call();
         const expire = await PrescriptionsABI.getContract().methods.expire(tokenId).call();
         const send = await PrescriptionsABI.getContract().methods.getApproved(tokenId).call() !== "0x0000000000000000000000000000000000000000";
-        console.log(send);
+        // console.log(send);
         prescriptions.push({
           prescriptions: tokenId,
           medicines: medicines,

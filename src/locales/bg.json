@@ -20,18 +20,20 @@
     "pharmacyAddress": "Адрес на Аптека",
     "sendPrescription": "Изпрати Рецепта",
     "amount": "Обща Сума",
-    "pageNotFound": "OOPS, PAGE NOT FOUND.",
+    "pageNotFound": "Упс! Страницата не е октрита.",
     "copyright": "Copyright © 2021",
     "mitlicense": "Създадено под лиценза MIT",
     "add-medicine": "Потърси или добави лекарство",
-    "expiration-date": "Ден на изтичане на рецепта"
+    "expiration-date": "Ден на изтичане на рецепта",
+    "prescriptionsTokenId": "Рецепта токен id:"
   },
   "buttons": {
     "ok": "OK",
     "cancel": "Cancel",
-    "create": "Create",
-    "send": "Send",
-    "accept": "Изпълни"
+    "create": "Създай",
+    "send": "Изпрати",
+    "accept": "Изпълни",
+    "revert": "Отмени"
   },
   "errors": {
     "err-patient-address": "Адресът на пациента не е валиден",
@@ -67,7 +69,7 @@
     },
     "prescriptions": {
       "noPrescription": "Няма налични рецепти",
-      "doctor-title": "Създай на нова рецепта"
+      "doctor-title": "Създаване на нова рецепта"
     },
     "insurance": {
       "title-patient": "Изпрати застраховка",
