@@ -1,67 +1,3 @@
-.main-container {
-  min-height: calc(100vh - 48px - 9px - 6vh);
-  background-size: cover;
-}
-
-.tb-container {
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  grid-gap: 20px;
-  grid-template-areas: "first-tb second-tb third-tb fourt-tb";
-}
-
-.first-tb {
-  grid-area: first-tb;
-}
-
-.second-tb {
-  grid-area: second-tb;
-}
-
-.third-tb {
-  grid-area: third-tb;
-}
-
-.fourt-tb {
-  grid-area: fourt-tb;
-}
-
-/* Media Queries */
-
-@media (max-width: 700px) {
-  .tb-container  {
-    grid-template-areas:
-      "first-tb second-tb third-tb fourt-tb";
-  }
-}
-
-@media (max-width: 500px) {
-  .tb-container  {
-    grid-template-areas:
-      "first-tb"
-      "second-tb"
-      "third-tb"
-      "fourt-tb";
-  }
-}
-
-.title {
-  padding-top: 2rem;
-  padding-bottom: 1rem;
-  color: #832DF4;
-  font-size: 20px;
-}
-
-.padding {
-  padding-top: 2rem;
-}
-
-.content {
-  text-align: center;
-  line-height: 1.8;
-}
-
   ::selection {
     background: #af59be;
     color: #fefefe;
@@ -94,75 +30,11 @@
     box-shadow: 0 0 0 0.2rem rgb(131, 45, 244, 45%) !important;
   }
 
-  .btn-secondary:hover {
-    transform: scale(1.1) !important;
-  }
-
-  .btn-danger:hover {
-    transform: scale(1.1) !important;
-  }
-
-.modal-main {
-  background-color: #e2d3f3 !important;
-}
-
-.modal-content {
-  border: 1px solid #7F797B !important;
-}
-
-.modal-form {
-  background-color: #e2d3f3 !important;
-}
-
-.modal-header {
-  background-color: #e2d3f3 !important;
-}
-
-.modal-body {
-  background-color: #e2d3f3 !important;
-}
-
-.modal-footer {
-  background-color: #e2d3f3 !important;
-}
-
-.simple-input {
-  margin-right: 10px;
-  padding-bottom: 5px;
-  margin-bottom: 16px;
-}
-
-.btn-tb {
-  margin-bottom: 16px; 
-}
-
-.label-tb {
-  margin-bottom: 8px; 
-}
-
-.multiselect {
-  height: 38px;
-}
-
-.multiselect-tb {
-  margin-bottom: 1rem;
-  height: 38px;
-}
-
-.multiselect__tags {
-  height: 38px;
-}
-
 .multiselect__tag {
   background: #b57ef2 !important;;
 }
 
 .multiselect__tag-icon:hover {
-  background-color: #832DF4 !important;
-}
-
-/* TODO: change .navbar-toggler-icon not working */
-.navbar-toggler-icon { 
   background-color: #832DF4 !important;
 }
 
@@ -183,25 +55,7 @@
   color: #AC82EB !important;
 }
 
-.input-main {
-  border: 1px solid #832DF4 !important;
-  border-radius: 0.25rem !important;
-}
-
-  .input-main:focus {
-    box-shadow: 0 0 0 0.2rem rgb(172, 130, 235, 48%) !important;
-    outline: none !important;
-  }
-
   .btn-outline-primary.disabled, .btn-outline-primary:disabled {
-    color: #832DF4 !important;
+    /* color: #832DF4 !important; */
     font-weight: bold !important;
   }
-
-.form-control {
-  border: 1px solid #832DF4 !important;
-}
-
-/* .border-top {
-  border-top: 1px solid #832DF4 !important;
-} */

@@ -1,45 +1,52 @@
 <template>
-  <div class="main-container content">
-
-    <div class="title">
-      {{ $t('text.pharmacy.title1') }}
-    </div>
-
-    <div class="tb-container">
-      <div class="first-tb label-tb">
-          {{ $t('labels.prescriptionsTokenId') }}:
+  <div>
+    <div class="box">
+      <div class="is-flex is-justify-content-space-between">
+        <div class="title">
+          {{ $t('text.pharmacy.title1') }}
         </div>
-      <input v-model="prescriptionsTokenId" :placeholder="prescriptionsTokenIdLbl" class="simple-input input-main second-tb"/>
-      <b-button class="third-tb btn-tb" size="md" variant="primary" @click="receivedPrescription">
-        {{ $t('buttons.send') }}
-      </b-button>
+        <b-button
+          class="button is-primary"
+          @click="receivedPrescription">
+            <b-icon icon="magic"/>
+            <strong>{{ $t('buttons.send') }}</strong>
+        </b-button>
+      </div>
+
+      <b-field :label="lblPrescriptionTokenId">
+        <b-input v-model="prescriptionsTokenId"/>
+      </b-field>
     </div>
 
-    <div class="title">
-      {{ $t('text.pharmacy.title2') }}
-    </div>
+    <div class="box">
+      <div class="title">
+        {{ $t('text.pharmacy.title2') }}
+      </div>
+      <p v-if="prescriptionsFulfilled.length === 0" class="no-prescriptions">
+        {{ $t('text.prescriptions.noPrescription') }}
+      </p>
+      <div v-else>
+        <b-table :data="prescriptionsFulfilled">
+          <b-table-column field="prescriptions" :label=this.lblPrescriptions v-slot="props">
+            {{ props.row.prescriptions }}
+          </b-table-column>
 
-    <p v-if="prescriptionsFulfilled.length === 0" class="no-prescriptions">
-      {{ $t('text.prescriptions.noPrescription') }}
-    </p>
-    <div v-else>
-    <b-table
-      class="main-table-style table-prescriptions"
-      striped
-      hover
-      :items="prescriptionsFulfilled"
-      :fields="fields"
-    >
-    </b-table>
-    </div>
+          <b-table-column field="medicines" :label=this.lblMedicines v-slot="props">
+            {{ props.row.medicines }}
+          </b-table-column>
 
+          <b-table-column field="expiration_Date" :label=this.lblExpirationDate v-slot="props">
+            {{ props.row.expiration_Date }}
+          </b-table-column>
+        </b-table>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 /* eslint-disable */
 import PrescriptionsABI from '../web3/prescriptionsABI';
-import '../assets/css/prescriptions.css';
 
 export default {
   name: 'PrescriptionsPharmacy',
@@ -49,9 +56,12 @@ export default {
   data() {
     return {
       errPatientAddr: this.$i18n.t('errors.err-patient-address'),
-      fields: ['prescriptions', 'medicines', 'expiration_Date'],
+      lblPrescriptions: this.$i18n.t('labels.prescriptions'),
+      lblMedicines: this.$i18n.t('labels.medicines'),
+      lblExpirationDate: this.$i18n.t('labels.expirationDate'),
+      // lblAccept: this.$i18n.t('labels.accept'),
+      lblPrescriptionTokenId: this.$i18n.t('labels.prescriptionsTokenId'),
       prescriptionsFulfilled: [],
-      fieldsWaiting: ['prescriptions', 'medicines', 'expiration_Date', 'accept'],
       prescriptionsWaiting: [],
       prescriptionsTokenId: null,
     };

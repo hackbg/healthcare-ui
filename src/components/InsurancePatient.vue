@@ -1,29 +1,41 @@
 <template>
-  <div class="main-container content">
-    <div class="title">
-      {{ $t('text.insurance.title-patient') }}
-    </div>
+  <div class="box">
     <form>
-      <div class="tb-container">
-        <div class="first-tb label-tb">
-          {{ $t('labels.doctorAddress') }}:
-        </div>
-        <b-form-group class="form-control-no-modal second-tb"
-            :invalid-feedback="errDoctorAddr"
-            :state="newDoctorState"
-          >
-          <b-form-input class="input-main" list="doctor-address" v-model="newDoctor"></b-form-input>
-          <datalist id="doctor-address">
-            <option v-for="doctor in doctors" v-bind:key="doctor.address">{{ doctor.name }} - {{ doctor.address }}</option>
-          </datalist>
-        </b-form-group>
-        <input v-model="insuranceAmmount" :placeholder="amountLbl" class="simple-input input-main third-tb"/>
-        <b-button class="fourt-tb btn-tb" size="md" variant="primary" @click="sendToDoctor">
-          {{ $t('buttons.send') }}
-        </b-button>
+      <div class="is-flex is-justify-content-space-between">
+        <h1 class="title">
+          {{ $t('text.insurance.title-patient') }}
+        </h1>
+        <button type="submit"
+          class="button is-info"
+          @click="sendToDoctor">
+          <b-icon icon="magic"/>
+          <strong>{{ $t('buttons.send') }}</strong>
+        </button>
       </div>
+
+      <b-field :label="lblDoctorAddress">
+        <div>
+          <b-input
+            list="doctor-address"
+            v-model="newDoctor"
+            :placeholder="lblDropDownPlaceholder"
+            :invalid-feedback="errDoctorAddr"
+            :state="newDoctorState">
+          </b-input>
+          <datalist id="doctor-address">
+            <option
+              v-for="doctor in doctors"
+              v-bind:key="doctor.address">{{ doctor.name }} - {{ doctor.address }}
+            </option>
+          </datalist>
+        </div>
+      </b-field>
+
+      <b-field :label="lblAmount">
+        <b-input v-model="insuranceAmmount" :placeholder="lblNumber" type="number" min="0"/>
+      </b-field>
+      <a :href="transactionURL">{{ transactionURL }}</a>   
     </form>
-    <b-link :href="transactionURL">{{ transactionURL }}</b-link>   
   </div>
 </template>
 
@@ -43,10 +55,13 @@ export default {
       newDoctor: '',
       newDoctorState: null,
       errDoctorAddr: this.$i18n.t('errors.err-doctor-address'),
-      amountLbl: this.$i18n.t('labels.amount'),
+      lblAmount: this.$i18n.t('labels.amount'),
+      lblDoctorAddress: this.$i18n.t('labels.doctorAddress'),
+      lblNumber: this.$i18n.t('labels.number'),
+      lblDropDownPlaceholder: this.$i18n.t('labels.dropDownPlaceholder'),
       insuranceAmmount: '',
       transactionURL: '',
-      doctors: doctorsData
+      doctors: doctorsData,
     };
   },
   methods: {

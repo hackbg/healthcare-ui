@@ -1,7 +1,7 @@
 .home-content {
   display: grid;
   margin-left: 2rem;
-  text-align: left !important;
+  /* text-align: left !important; */
   grid-gap: 20px;
   padding-top: 1rem;
   grid-template-areas: "first-hm";
@@ -10,6 +10,8 @@
 .home-container {
   line-height: 1.4;
   text-align: center;
+  /* margin-left: auto;
+    margin-right: auto; */
 }
 
 /* Media Queries */

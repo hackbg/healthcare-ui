@@ -1,68 +1,114 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" class="navbar-menu">
-      <b-navbar-brand to="/home">
-        <img id="logo" src="@/assets/img/logo.png"/>
-      </b-navbar-brand>
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav>   
-          <b-nav-item class="navbar-item" to="/home" exact>
-            <div class="navbar-item-text">
-              {{ $t('labels.navbar.healthcare') }}
+    <header class="header">
+      <b-navbar class="container is-max-desktop">
+        <template slot="brand">
+          <b-navbar-item tag="router-link" :to="{ path: '/' }">
+            <div>
+              <b-icon icon="heartbeat" type="is-primary" />
+              <h1 class="logo title is-6 has-text-primary">
+                {{ $t('labels.navbar.healthcare') }}
+              </h1>
             </div>
-          </b-nav-item>
-
-          <b-nav-item v-if="userType === 'patient' || userType === 'doctor' || userType === 'pharmacy'"
-            class="navbar-item" to="/prescriptions">
-              <div class="navbar-item-text">
-                {{ $t('labels.navbar.prescriptions') }}
-              </div>
-          </b-nav-item>
-
-          <b-nav-item v-if="userType === 'patient' || userType === 'insurer' || userType === 'doctor'" class="navbar-item" to="/insurance">
+          </b-navbar-item>
+        </template>
+        <template slot="start">
+          <b-navbar-item
+            v-if="userType === 'patient' || userType === 'doctor' || userType === 'pharmacy'"
+            tag="router-link"
+            to="/prescriptions"
+            class="has-text-primary"
+          >
+            <div class="navbar-item-text">
+              {{ $t('labels.navbar.prescriptions') }}
+            </div>
+          </b-navbar-item>
+          <b-navbar-item
+            v-if="userType === 'patient' || userType === 'insurer' || userType === 'doctor'"
+            tag="router-link"
+            to="/insurance"
+            class="has-text-primary"
+          >
             <div class="navbar-item-text">
               {{ $t('labels.navbar.insurance') }}
             </div>
-          </b-nav-item>
-        </b-navbar-nav>
+          </b-navbar-item>
+        </template>
 
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <b-nav-form class="account">{{ $t('labels.account') }}: {{userType || ''}}</b-nav-form> 
-          
-          <language-switcher></language-switcher>
-
-          <b-nav-item v-if="userType !== undefined" class="navbar-item" @click="signOut()">
-              <div class="navbar-item-text">
+        <template slot="end">
+          <template>
+            <!-- <b-navbar-item tag="div" class="has-text-primary">
+              {{ $t('labels.account') }}: {{userType || ''}}
+            </b-navbar-item> -->
+            <b-navbar-item tag="div" class="has-text-primary right-nav-item">
+              <language-switcher></language-switcher>
+            </b-navbar-item>
+            <b-navbar-item tag="div">
+              <user-address
+                v-if="userType === 'patient' || userType === 'insurer' || userType === 'doctor' || userType === 'pharmacy'"
+                :address="userType"
+                class="has-background-primary-light mt-1"
+                truncate
+              />
+            </b-navbar-item> 
+            <b-navbar-item tag="div" class="right-nav-item">
+              <b-button
+                inverted
+                v-if="userType !== undefined"
+                size="is-primary is-small"
+                @click="signIn()"
+                class="small-nav-element"
+              >
                 {{ $t('labels.navbar.signout') }}
-              </div>
-          </b-nav-item>
-          <b-nav-item v-else class="navbar-item" @click="signOut()">
-            <div class="navbar-item-text">
-              {{ $t('labels.navbar.signin') }}
-            </div>
-          </b-nav-item> 
-        </b-navbar-nav> 
-      </b-collapse>
-    </b-navbar>
+              </b-button>
+
+              <b-button
+                inverted
+                v-else
+                size="is-primary is-small"
+                @click="signIn(); isComponentModalActive = true"
+                class="small-nav-element"
+              >
+                {{ $t('labels.navbar.signin') }}
+              </b-button>
+            </b-navbar-item>
+          </template>
+        </template>
+      </b-navbar>
+    </header>
+    <b-modal
+      v-model="isComponentModalActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal>
+      <template #default="props">
+        <Login @close="props.close"></Login>
+      </template>
+    </b-modal>
   </div>
 </template>
 
 <script>
 import LanguageSwitcher from '../LanguageSwitcher.vue';
-import '../../assets/css/navbar.css';
+import Login from '../Welcome.vue';
+import UserAddress from '../UserAddress.vue';
+import '../../assets/scss/main.scss';
 
 export default {
-  components: { LanguageSwitcher },
+  components: {
+    LanguageSwitcher,
+    UserAddress,
+    Login
+  },
   name: 'Navbar',
   props: {
     msg: String
   },
   data() {
     return {
-    //   web3
+      isComponentModalActive: false,
     }
   },
   computed: {
@@ -71,11 +117,27 @@ export default {
     }
   },
   methods: {
-    signOut() {
+    signIn() {
       this.$store.commit('userType', undefined);
-      if(this.$route.path !== '/')
-        this.$router.push('/');
+      // if(this.$route.path !== '/login')
+      //   this.$router.push('/login');
     },
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.logo {
+  display: inline;
+  color: #fff;
+}
+
+.right-nav-item {
+  padding: 0;
+}
+
+.small-nav-element {
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}
+</style>

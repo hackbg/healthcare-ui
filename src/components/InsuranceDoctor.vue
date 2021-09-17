@@ -1,9 +1,9 @@
 <template>
-  <div class="main-container content">
-    <div class="title">
-      Account balance:
+  <div class="box">
+    <!-- TODO: one line title and balance -->
+    <div class="content">
+      <h1 class="title h1-tag">{{ $t('labels.accountBalance') }}</h1><code>{{ accountBalance }}</code>
     </div>
-    <div>{{ accountBalance }}</div>
   </div>
 </template>
 

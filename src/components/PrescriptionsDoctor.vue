@@ -1,47 +1,69 @@
 <template>
-  <div class="main-container content">
-      <div class="title">
-        {{ $t('text.prescriptions.doctor-title') }}
+  <div class="box">
+    <form>
+      <div class="is-flex is-justify-content-space-between">
+        <h1 class="title">
+          {{ $t('text.prescriptions.doctor-title') }}
+        </h1>
+        <button
+          type="submit"
+          class="button is-info"
+          @click="newPrescription">
+            <b-icon icon="magic"/>
+            <strong>{{ $t('buttons.create') }}</strong>
+        </button>
       </div>
-      <form>
-        <div class="ps-container">
-          <div class="first-ps label-tb">
-            {{ $t('labels.patientAddress') }}:
-          </div>
-          <b-form-group class="form-control-no-modal second-ps"
+
+      <b-field :label="lblPatientAddress">
+        <div>
+          <b-input
+            list="patient-prescription"
+            v-model="newPatient"
+            :placeholder="lblDropDownPlaceholder"
             :invalid-feedback="errPatientAddr"
             :state="newPatientState"
           >
-          <b-form-input list="patient-prescription" v-model="newPatient" class="input-main"></b-form-input>
+          </b-input>
           <datalist id="patient-prescription">
-            <option v-for="patient in patients" v-bind:key="patient.address">{{ patient.name }} - {{ patient.address }}</option>
+            <option
+              v-for="patient in patients"
+              v-bind:key="patient.address">{{ patient.name }} - {{ patient.address }}
+            </option>
           </datalist>
-          </b-form-group>
-          <div class="third-ps">
-            <multiselect v-model="value" class="multiselect-tb input-main" tag-placeholder="Add this as new tag" :placeholder="addMedicineLbl" label="name" track-by="code" :options="medicines" :multiple="true"></multiselect>
-          </div>
-          <b-button size="md" class="fourt-ps btn-tb" variant="primary" @click="newPrescription">
-          {{ $t('buttons.create') }}
-          </b-button>
         </div>
-      </form>
-      <div class="lbl-prescription-expiration">
-        {{ $t('labels.expiration-date') }}:
-      </div>
-      <div class="date-time-picker">
-        <b-calendar @context="onContext" :min="min" locale="en-UK" :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"></b-calendar>
-      </div>
-    </div>
+      </b-field>
 
-<!-- TODO: add in languages -->
-    
+      <b-field :label="lblMedicines">
+        <multiselect
+          v-model="value"
+          tag-placeholder="Add this as new tag"
+          :placeholder="lblAddMedicine" label="name"
+          track-by="code"
+          :options="medicines"
+          :multiple="true">
+        </multiselect>
+      </b-field>
+
+      <b-field :label="lblExpirationDate">
+       <b-datepicker
+          v-model="closing"
+          icon="calendar"
+          :placeholder="lblDropDownPlaceholder"
+          horizontal-time-picker
+          rounded
+          required
+          :min-date="min"
+          :date-parser="getTimestamp" :v-model="selectedDate"
+        ></b-datepicker>
+      </b-field>
+    </form>
+  </div>
 </template>
 
 <script>
 /* eslint-disable */
 import Vue from 'vue';
 import web3 from "../web3/web3";
-import '../assets/css/prescriptions.css';
 import patientsData from '../data/patients.json';
 import Multiselect from 'vue-multiselect';
 import MedicinesABI from '../web3/medicinesABI';
@@ -66,13 +88,18 @@ export default {
       newPatient: '',
       newPatientState: null,
       errPatientAddr: this.$i18n.t('errors.err-patient-address'),
-      addMedicineLbl: this.$i18n.t('labels.add-medicine'),
+      lblAddMedicine: this.$i18n.t('labels.add-medicine'),
+      lblPatientAddress: this.$i18n.t('labels.patientAddress'),
+      lblMedicines: this.$i18n.t('labels.medicines'),
+      lblExpirationDate: this.$i18n.t('labels.expiration-date'),
+      lblDropDownPlaceholder: this.$i18n.t('labels.dropDownPlaceholder'),
       patients: patientsData,
       context: null,
       value: [],
       medicines: [],
       selectedDate: null,
-      min: minDate
+      min: minDate,
+      closing: null,
     };
   },
   methods: {
@@ -137,10 +164,13 @@ export default {
       }
     },
 
-    onContext(ctx) {
-      console.log('context'); //TODO: 
-      this.context = ctx;
-      this.selectedDate = Math.ceil(new Date(ctx.activeDate) - new Date()/1000) + 24*60*60; //TODO: check the math
+    // onContext(ctx) {
+    //   console.log('context'); //TODO:
+    //   this.context = ctx;
+    //   this.selectedDate = Math.ceil(new Date(ctx.activeDate) - new Date()/1000) + 24*60*60; //TODO: check the math
+    // },
+    getTimestamp(date) {
+      return Math.ceil(new Date(ctx.activeDate) - new Date()/1000) + 24*60*60; //TODO: check the math
     },
 
   },

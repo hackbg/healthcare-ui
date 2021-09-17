@@ -4,10 +4,10 @@
   },
   "labels": {
     "navbar": {
-      "healthcare": "Healthcare",
+      "healthcare": "HealthCare",
       "insurance": "Insurance",
       "prescriptions": "Prescriptions",
-      "signout": "Sign Out",
+      "signout": "Log out",
       "signin": "Log in",
       "language": {
         "en": "EN",
@@ -24,8 +24,17 @@
     "copyright": "Copyright © 2021",
     "mitlicense": "Created under the MIT License",
     "add-medicine": "Search or add medicine",
-    "expiration-date": "Prescription expiration date",
-    "prescriptionsTokenId": "Prescriptions token id:"
+    "expiration-date": "Expiration date",
+    "prescriptionsTokenId": "Prescriptions number",
+    "healthCare": "HealthCare by ",
+    "findSourceCode": "The source code is available on",
+    "prescriptions": "Prescriptions",
+    "medicines": "Medicines",
+    "expirationDate" : "Expiration Date",
+    "send": "Send",
+    "accountBalance": "Account balance",
+    "number": "Number",
+    "dropDownPlaceholder": "Click to select..."
   },
   "buttons": {
     "ok": "OK",
@@ -33,7 +42,8 @@
     "create": "Create",
     "send": "Send",
     "accept": "Accept",
-    "revert": "Revert"
+    "revert": "Revert",
+    "close": "Close"
   },
   "errors": {
     "err-patient-address": "The patient address is invalid",
@@ -56,16 +66,17 @@
   "text": {
     "welcome": {
       "title1": "Welcome to",
-      "title2": "healthcare blockchain demo!",
-      "content": "Log in as a different participant and consider the various functionalities that can be used.",
+      "title2": "Health care blockchain demo!",
+      "content": "Log in as a different participant and consider the various functionalities that can be used for each of them.",
       "patient": "Patient",
       "doctor": "Doctor",
       "pharmacy": "Pharmacy",
-      "insurer": "Insurer"
+      "insurer": "Insurer",
+      "note": "Note: The login is just for demo purposes. In the real world should have different behaviour with max 2 accounts per user."
     },
     "home": {
-      "title": "Demo for healthcare blockchain",
-      "content": "<ul><li>Doctors can make prescriptions.</li><br/><li>Patients can recieve online prescription with up to 18 medicines in it.</li><br/><li>Pharmacies can check for online prescription and sell the prescribed medicines.</li><br/><li>The goal is to avoid medicines fraud.</li><br/><li>The doctor can't prescribe medicines for which doesn't have right. For example not legal or too expensive.</li><br/><li>Fraudsters not to be able to falsify prescriptons. For examle fake prescriptions with free medicines and sell them after.</li><br/><li>Patients not to rewrite prescriptions.</li><br/><li>Pharmacies not to lie to the goverment that they have given more free and reduced medicines than they realy did.</li></ul>"
+      "title": "Demo for Health care blockchain",
+      "content": "<ul><li>Doctors can make prescriptions.</li><br/><li>Patients can receive online prescription with up to 18 medicines in it.</li><br/><li>Pharmacies can check for online prescription and sell the prescribed medicines.</li><br/><li>The goal is to avoid medicines fraud.</li><br/><li>The doctor can't prescribe medicines for which doesn't have right. For example not legal or too expensive.</li><br/><li>Fraudsters not to be able to falsify prescriptons. For examle fake prescriptions with free medicines and sell them after.</li><br/><li>Patients not to rewrite prescriptions.</li><br/><li>Pharmacies not to lie to the goverment that they have given more free and reduced medicines than they realy did.</li></ul>"
     },
     "prescriptions": {
       "noPrescription": "You have no available prescriptions",

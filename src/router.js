@@ -19,7 +19,7 @@ const router = new Router({
   linkActiveClass:'is-active',
   routes: [
     {
-      path: '/home',
+      path: '/',
       name: 'Home',
       component: Home,
       meta: {
@@ -27,7 +27,7 @@ const router = new Router({
       }
     },
     {
-      path: '/',
+      path: '/login',
       name: 'Welcome',
       component: Welcome,
       meta: {

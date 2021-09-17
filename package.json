@@ -11,8 +11,9 @@
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
   },
   "dependencies": {
-    "bootstrap": "^4.6.0",
-    "bootstrap-vue": "^2.21.2",
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "@hackbg/design-system": "0.0.1",
+    "buefy": "^0.9.8",
     "core-js": "^3.6.5",
     "node-sass": "^5.0.0",
     "sass-loader": "^10.1.1",

@@ -1,27 +1,52 @@
 <template>
   <div>
-    <b-modal
-      id="prescription-send"
-      class="modal-prescription-send"
-      :title="sendPrescription"
-      @show="resetModal"
-      @hidden="resetModal"
-      @ok="handleOk"
-    >
-      <form ref="form" @submit.stop.prevent="handleSubmit" class="modal-form">
-        <b-form-group
-          :label="pharmacyAddress"
-          label-for="pharmacy-address-input"
-          invalid-feedback="errPharmacyAddr"
-          :state="newPharmacyState"
-        >
-          <b-form-input list="my-list-id" v-model="newPharmacy" class="input-main"></b-form-input>
-          <datalist id="my-list-id">
-            <option v-for="pharmacy in pharmacies" v-bind:key="pharmacy.address">{{ pharmacy.name }} - {{ pharmacy.address }}</option>
-          </datalist>
-        </b-form-group>
-      </form>
-    </b-modal>
+    <form ref="form" @submit.stop.prevent="handleSubmit" class="modal-form">
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">{{ $t('labels.sendPrescription') }}</p>
+          <button
+            type="button"
+            class="delete"
+            @click="$emit('close')"/>
+        </header>
+        <section class="modal-card-body">
+          <b-field :label="pharmacyAddress">
+          <div>
+            <b-input list="my-list-id"
+              v-model="newPharmacy"
+              :placeholder="lblDropDownPlaceholder"
+            ></b-input>
+            <datalist id="my-list-id">
+              <option
+                v-for="pharmacy in pharmacies"
+                v-bind:key="pharmacy.address">{{ pharmacy.name }} - {{ pharmacy.address }}
+              </option>
+            </datalist>
+          </div>
+          </b-field>
+        </section>
+        <footer class="modal-card-foot">
+          <b-button
+            :label="btnClose"
+            @click="handleClose" />
+          <b-button
+            :label="btnOK"
+            @click="handleOk"
+            type="is-primary" />
+        </footer>
+      <!-- <b-form-group
+        :label="pharmacyAddress"
+        label-for="pharmacy-address-input"
+        invalid-feedback="errPharmacyAddr"
+        :state="newPharmacyState"
+      >
+        <b-form-input list="my-list-id" v-model="newPharmacy" class="input-main"></b-form-input>
+        <datalist id="my-list-id">
+          <option v-for="pharmacy in pharmacies" v-bind:key="pharmacy.address">{{ pharmacy.name }} - {{ pharmacy.address }}</option>
+        </datalist>
+      </b-form-group> -->
+      </div>
+    </form>
   </div>
 </template>
 
@@ -39,9 +64,12 @@ export default {
   },
   data() {
     return {
-      sendPrescription: this.$i18n.t('labels.sendPrescription'),
+      // sendPrescription: this.$i18n.t('labels.sendPrescription'),
       pharmacyAddress: this.$i18n.t('labels.pharmacyAddress'),
       errPharmacyAddr: this.$i18n.t('errors.err-pharmacy-address'),
+      lblDropDownPlaceholder: this.$i18n.t('labels.dropDownPlaceholder'),
+      btnClose: this.$i18n.t('buttons.close'),
+      btnOK: this.$i18n.t('buttons.ok'),
       newPharmacy: '',
       newPharmacyState: null,
       pharmacies: pharmaciesData
@@ -66,11 +94,16 @@ export default {
       this.newPharmacy = '';
       this.newPharmacyState = null;
     },
+    handleClose() {
+      this.$emit('close');
+      this.resetModal();
+    },
     handleOk(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
       // Trigger submit handler
       this.handleSubmit();
+      this.resetModal();
     },
     async handleSubmit() {
       // Exit when the form isn't valid
@@ -92,7 +125,7 @@ export default {
       }
       catch(ex) {
         Vue.$toast.open({
-          message: ex,
+          message: ex.message,
           type: 'error',
           duration: 3000,
           pauseOnHover: true,
@@ -102,9 +135,9 @@ export default {
       // prescriptionsABI.changeAddress(this.newWallet);
       // this.getWallets();
       // Hide the modal manually
-      this.$nextTick(() => {
-        this.$bvModal.hide('prescription-send');
-      });
+      // this.$nextTick(() => {
+      //   this.$bvModal.hide('prescription-send');
+      // });
     },
   },
 };

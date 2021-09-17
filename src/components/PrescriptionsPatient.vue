@@ -1,50 +1,60 @@
 <template>
-  <div class="main-container content">
+  <div class="box">
     <p v-if="prescriptions.length == 0" class="no-prescriptions">
       {{ $t('text.prescriptions.noPrescription') }}
     </p>
     <div v-else>
-    <b-table
-      class="main-table-style table-prescriptions"
-      striped
-      hover
-      :items="prescriptions"
-      :fields="fields"
-    >
-      <template #cell(send)="row">
-        <b-button
-          v-if="!row.item.send"
-          @click="selectedId = row.item.prescriptions"
-          v-b-modal="'prescription-send'"
-          size="sm"
-          variant="primary"
-          class="btn-table"
-        >
-          {{ $t('buttons.send') }}
-        </b-button>
-        <!-- TODO: finish after -->
-        <b-button
-          v-else size="sm"
-          variant="danger"
-          @click="revertSend(row.item.prescriptions)"
-          class="btn-table"
-        >
-          {{ $t('buttons.revert') }}
-        </b-button>
-        <!-- <span else>
-          Executed
-        </span> -->
-      </template>
-    </b-table>
+      <b-table :data="prescriptions" class="user-table">
+        <b-table-column field="prescriptions" :label=this.lblPrescriptions centered v-slot="props">
+          {{ props.row.prescriptions }}
+        </b-table-column>
+
+        <b-table-column field="medicines" :label=this.lblMedicines centered v-slot="props">
+          {{ props.row.medicines }}
+        </b-table-column>
+
+        <b-table-column field="expiration_Date" :label=this.lblExpirationDate centered v-slot="props">
+          {{ props.row.expiration_Date }}
+        </b-table-column>
+
+        <b-table-column field="send" :label=this.lblSend centered v-slot="props">
+          <b-button
+            v-if="!props.row.send"
+            @click="selectedId = props.row.prescriptions; isComponentModalActive = true"
+            size="sm"
+            class="button is-success"
+          >
+            {{ $t('buttons.send') }}
+          </b-button>
+          <b-button
+            v-else
+            size="sm"
+            class="button is-danger"
+            @click="revertSend(props.row.prescriptions)"
+          >
+            {{ $t('buttons.revert') }}
+          </b-button>
+        </b-table-column> 
+      </b-table>
     </div>
-    <PrescriptionSend :tokenID="selectedId"/>
+    <b-modal
+      v-model="isComponentModalActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      :aria-label="lblSendPrescription"
+      aria-modal>
+      <template #default="props">
+        <PrescriptionSend :tokenID="selectedId" @close="props.close"></PrescriptionSend>
+      </template>
+    </b-modal>
   </div>
 </template>
 
 <script>
 /* eslint-disable */
 import Vue from 'vue';
-import '../assets/css/prescriptions.css';
 import PrescriptionSend from './PrescriptionSend.vue';
 import PrescriptionsABI from '../web3/prescriptionsABI';
 
@@ -57,9 +67,15 @@ export default {
   data() {
     return {
       errPatientAddr: this.$i18n.t('errors.err-patient-address'),
-      fields: ['prescriptions', 'medicines', 'expiration_Date', 'send'],
+      lblPrescriptions: this.$i18n.t('labels.prescriptions'),
+      lblMedicines: this.$i18n.t('labels.medicines'),
+      lblExpirationDate: this.$i18n.t('labels.expirationDate'),
+      lblSend: this.$i18n.t('labels.send'),
+      lblSendPrescription: this.$i18n.t('labels.sendPrescription'),
+
       prescriptions: [],
       selectedId: '',
+      isComponentModalActive: false,
     };
   },
   components: {

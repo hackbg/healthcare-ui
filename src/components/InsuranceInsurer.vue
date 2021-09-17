@@ -1,29 +1,42 @@
 <template>
-  <div class="main-container content">
-    <div class="title">
-      {{ $t('text.insurance.createInsurance') }}
-    </div>
+  <div class="box">
     <form>
-      <div class="tb-container">
-        <div class="first-tb label-tb">
-          {{ $t('labels.patientAddress') }}:
+      <div class="is-flex is-justify-content-space-between">
+        <div class="title">
+          {{ $t('text.insurance.createInsurance') }}
         </div>
-        <b-form-group class="form-control-no-modal second-tb"
+        <b-button
+          type="submit"
+          class="button is-info"
+          @click="createInsurance">
+          <b-icon icon="magic"/>
+          <strong>{{ $t('buttons.send') }}</strong>
+        </b-button>
+      </div>
+      <b-field :label="lblPatientAddress">
+        <div>
+          <b-input
+            list="patient-address"
+            v-model="newPatient"
+            :placeholder="lblDropDownPlaceholder"
             :invalid-feedback="errPatientAddr"
             :state="newPatientState"
           >
-          <b-form-input list="patient-address" class="input-main" v-model="newPatient"></b-form-input>
+          </b-input>
           <datalist id="patient-address">
-            <option v-for="patient in patients" v-bind:key="patient.address">{{ patient.name }} - {{ patient.address }}</option>
+            <option
+              v-for="patient in patients"
+              v-bind:key="patient.address">{{ patient.name }} - {{ patient.address }}
+            </option>
           </datalist>
-        </b-form-group>
-        <input v-model="insuranceAmmount" :placeholder="amountLbl" class="simple-input input-main third-tb"/>
-        <b-button class="fourt-tb btn-tb" size="md" variant="primary" @click="createInsurance">
-          {{ $t('buttons.send') }}
-        </b-button>
-      </div>
+        </div>
+      </b-field>
+
+      <b-field :label="amountLbl">
+        <b-input v-model="insuranceAmmount" :placeholder="lblNumber" type="number" min="0"/>
+      </b-field>
     </form>
-    <b-link :href="transactionURL">{{ transactionURL }}</b-link>
+    <a :href="transactionURL">{{ transactionURL }}</a>
   </div>
 </template>
 
@@ -44,6 +57,9 @@ export default {
       newPatientState: null,
       errPatientAddr: this.$i18n.t('errors.err-patient-address'),
       amountLbl: this.$i18n.t('labels.amount'),
+      lblPatientAddress: this.$i18n.t('labels.patientAddress'),
+      lblDropDownPlaceholder: this.$i18n.t('labels.dropDownPlaceholder'),
+      lblNumber: this.$i18n.t('labels.number'),
       insuranceAmmount: '',
       patients: patientsData,
       transactionURL: ''
