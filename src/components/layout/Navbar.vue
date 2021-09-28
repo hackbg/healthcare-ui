@@ -58,6 +58,7 @@
                 size="is-primary is-small"
                 @click="signIn()"
                 class="small-nav-element"
+                id="login"
               >
                 {{ $t('labels.navbar.signout') }}
               </b-button>
@@ -68,6 +69,7 @@
                 size="is-primary is-small"
                 @click="signIn(); isComponentModalActive = true"
                 class="small-nav-element"
+                id="login"
               >
                 {{ $t('labels.navbar.signin') }}
               </b-button>
@@ -91,6 +93,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import LanguageSwitcher from '../LanguageSwitcher.vue';
 import Login from '../Welcome.vue';
 import UserAddress from '../UserAddress.vue';
@@ -109,6 +112,7 @@ export default {
   data() {
     return {
       isComponentModalActive: false,
+      lblLogedOut: this.$i18n.t('labels.navbar.logedOut'),
     }
   },
   computed: {
@@ -118,9 +122,16 @@ export default {
   },
   methods: {
     signIn() {
+      if(this.userType !== undefined) {
+        Vue.$toast.open({
+          message: this.lblLogedOut,
+          type: 'success',
+          duration: 3000,
+          pauseOnHover: true,
+          position: 'top-right',
+        });
+      }
       this.$store.commit('userType', undefined);
-      // if(this.$route.path !== '/login')
-      //   this.$router.push('/login');
     },
   }
 }

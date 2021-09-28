@@ -1,41 +1,53 @@
 <template>
-  <div class="box">
-    <form>
-      <div class="is-flex is-justify-content-space-between">
-        <h1 class="title">
-          {{ $t('text.insurance.title-patient') }}
-        </h1>
-        <button type="submit"
-          class="button is-info"
-          @click="sendToDoctor">
-          <b-icon icon="magic"/>
-          <strong>{{ $t('buttons.send') }}</strong>
-        </button>
-      </div>
-
-      <b-field :label="lblDoctorAddress">
-        <div>
-          <b-input
-            list="doctor-address"
-            v-model="newDoctor"
-            :placeholder="lblDropDownPlaceholder"
-            :invalid-feedback="errDoctorAddr"
-            :state="newDoctorState">
-          </b-input>
-          <datalist id="doctor-address">
-            <option
-              v-for="doctor in doctors"
-              v-bind:key="doctor.address">{{ doctor.name }} - {{ doctor.address }}
-            </option>
-          </datalist>
+  <div>
+    <div class="box">
+      <form v-on:submit.prevent="sendToDoctor">
+        <div class="is-flex is-justify-content-space-between">
+          <div class="title">
+            {{ $t('text.insurance.title-patient') }}
+          </div>
+          <button
+            type="submit"
+            class="button is-info">
+            <b-icon icon="magic"/>
+            <strong>{{ $t('buttons.send') }}</strong>
+          </button>
         </div>
-      </b-field>
 
-      <b-field :label="lblAmount">
-        <b-input v-model="insuranceAmmount" :placeholder="lblNumber" type="number" min="0"/>
-      </b-field>
-      <a :href="transactionURL">{{ transactionURL }}</a>   
-    </form>
+        <b-field :label="lblDoctorAddress">
+          <div>
+            <b-input
+              list="doctor-address"
+              v-model="newDoctor"
+              :placeholder="lblDropDownPlaceholder"
+              :invalid-feedback="errDoctorAddr"
+              :state="newDoctorState"
+              required
+              minlength="4">
+            </b-input>
+            <datalist id="doctor-address">
+              <option
+                v-for="doctor in doctors"
+                v-bind:key="doctor.address">{{ doctor.name }} - {{ doctor.address }}
+              </option>
+            </datalist>
+          </div>
+        </b-field>
+
+        <b-field :label="lblAmount">
+          <b-input
+            v-model="insuranceAmmount"
+            :placeholder="lblNumber"
+            required
+            type="number"
+            min="0"/>
+        </b-field>
+      </form>
+    </div>
+    <div class="is-flex is-justify-content-space-between">
+      <span class="transaction-lbl-url title">{{ lblTransaction }}</span>
+      <a :href="transactionURL" class="transaction-lbl-url title">{{ transactionURL }}</a>
+    </div>
   </div>
 </template>
 
@@ -55,10 +67,13 @@ export default {
       newDoctor: '',
       newDoctorState: null,
       errDoctorAddr: this.$i18n.t('errors.err-doctor-address'),
+      failSendTransaction: this.$i18n.t('errors.err-transaction-send'),
+      sentTransaction: this.$i18n.t('dialogs.messages.sentTransaction'),
       lblAmount: this.$i18n.t('labels.amount'),
       lblDoctorAddress: this.$i18n.t('labels.doctorAddress'),
       lblNumber: this.$i18n.t('labels.number'),
       lblDropDownPlaceholder: this.$i18n.t('labels.dropDownPlaceholder'),
+      lblTransaction: '',
       insuranceAmmount: '',
       transactionURL: '',
       doctors: doctorsData,
@@ -69,18 +84,49 @@ export default {
       const amount = web3.utils.toWei(this.insuranceAmmount);
       const doctor = this.newDoctor.split(' - ')[1];
       try {
-        const res = await InsuranceABI.getContract().methods.transfer(doctor, amount).send({ from: web3.currentProvider.selectedAddress });
-        this.transactionURL =  `https://ropsten.etherscan.io/tx/${res.transactionHash}`;
-        // console.log(res.transactionHash);
+        const insuranceAmmount = this.insuranceAmmount;
+        InsuranceABI.getContract().methods.transfer(doctor, amount).send({ from: web3.currentProvider.selectedAddress }, async (error, transactionHash) => {
+          if(error) {
+            Vue.$toast.open({
+            message: this.failSendTransaction,
+            type: 'error',
+            duration: 3000,
+            pauseOnHover: true,
+            position: 'top-right',
+          });
+          return;
+          }
+          this.transactionURL = `https://ropsten.etherscan.io/tx/${transactionHash}`;
+          this.lblTransaction = this.$i18n.t('labels.transactionUrl');
+
+          this.newDoctor = '';
+          this.insuranceAmmount = '';
+
+          Vue.$toast.open({
+          message: this.sentTransaction,
+          type: 'success',
+          duration: 3000,
+          pauseOnHover: true,
+          position: 'top-right',
+        });
+        const pendingTxHashes = this.$store.state.pendingTxHashes;
+        pendingTxHashes.push({tx: transactionHash, msg:  this.$i18n.t('labels.createdInsurance') + insuranceAmmount});
+        this.$store.commit('pendingTxHashes', pendingTxHashes);
+        })
       }
+      // try {
+      //   const res = await InsuranceABI.getContract().methods.transfer(doctor, amount).send({ from: web3.currentProvider.selectedAddress });
+      //   this.transactionURL =  `https://ropsten.etherscan.io/tx/${res.transactionHash}`;
+      //   // console.log(res.transactionHash);
+      // }
       catch(ex) {
         Vue.$toast.open({
-        message: ex,
-        type: 'error',
-        duration: 3000,
-        pauseOnHover: true,
-        position: 'top-right',
-    });
+          message: ex,
+          type: 'error',
+          duration: 3000,
+          pauseOnHover: true,
+          position: 'top-right',
+        });
       }
     }
   }

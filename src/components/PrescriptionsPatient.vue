@@ -72,6 +72,7 @@ export default {
       lblExpirationDate: this.$i18n.t('labels.expirationDate'),
       lblSend: this.$i18n.t('labels.send'),
       lblSendPrescription: this.$i18n.t('labels.sendPrescription'),
+      failSendTransaction: this.$i18n.t('errors.err-transaction-send'),
 
       prescriptions: [],
       selectedId: '',
@@ -110,14 +111,29 @@ export default {
 
     async revertSend(tokenID) {
       try {
-        const res = PrescriptionsABI.getContract().methods.approve("0x0000000000000000000000000000000000000000", Number(tokenID)).send({ from: web3.currentProvider.selectedAddress });
-        const transactionHash = `transaction hash: ${res.transactionHash}`;
-        Vue.$toast.open({
-          message: transactionHash,
-          type: 'success',
-          duration: 3000,
-          pauseOnHover: true,
-          position: 'top-right',
+        PrescriptionsABI.getContract().methods.approve("0x0000000000000000000000000000000000000000", Number(tokenID)).send({ from: web3.currentProvider.selectedAddress }, async (error, transactionHash) => {
+        if(error) {
+            Vue.$toast.open({
+              message: this.failSendTransaction,
+              type: 'error',
+              duration: 3000,
+              pauseOnHover: true,
+              position: 'top-right',
+            });
+            return;
+          }
+        
+          transactionHash = `transaction hash: ${res.transactionHash}`;
+          Vue.$toast.open({
+            message: transactionHash,
+            type: 'success',
+            duration: 3000,
+            pauseOnHover: true,
+            position: 'top-right',
+          });
+          const pendingTxHashes = this.$store.state.pendingTxHashes;
+          pendingTxHashes.push({tx: transactionHash, msg:  this.$i18n.t('labels.createdInsurance') + insuranceAmmount});
+          this.$store.commit('pendingTxHashes', pendingTxHashes);
         });
       }
       catch(ex) {

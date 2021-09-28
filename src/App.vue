@@ -13,12 +13,14 @@
 <script>
 import Navbar from './components/layout/Navbar.vue'
 import Footer from './components/layout/Footer.vue'
+// import WalletConnect from './components/WalletConnect.vue'
 
 export default {
   name: 'App',
   components: {
     Navbar,
-    Footer
+    Footer,
+    // WalletConnect
   }
 }
 </script>

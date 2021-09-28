@@ -63,25 +63,29 @@ export default {
   methods: {
     setPatient() {
       this.$store.commit('userType', 'patient');
-      this.$router.push('/');
+      if(this.$route.path !== '/')
+        this.$router.push('/');
       this.$emit('close');
     },
     setDoctor() {
       // localStorage.userType = "doctor";
       this.$store.commit('userType', 'doctor');
-      this.$router.push('/');
+      if(this.$route.path !== '/')
+        this.$router.push('/');
       this.$emit('close');
     },
     setPharmacy() {
       // localStorage.userType = "pharmacy";
       this.$store.commit('userType', 'pharmacy');
-      this.$router.push('/');
+      if(this.$route.path !== '/')
+        this.$router.push('/');
       this.$emit('close');
     },
     setInsurer() {
       // localStorage.userType = "insurer";
       this.$store.commit('userType', 'insurer');
-      this.$router.push('/');
+      if(this.$route.path !== '/')
+        this.$router.push('/');
       this.$emit('close');
     },
   }

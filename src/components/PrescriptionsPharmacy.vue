@@ -14,7 +14,7 @@
       </div>
 
       <b-field :label="lblPrescriptionTokenId">
-        <b-input v-model="prescriptionsTokenId"/>
+        <b-input required v-model="prescriptionsTokenId"/>
       </b-field>
     </div>
 
@@ -61,6 +61,7 @@ export default {
       lblExpirationDate: this.$i18n.t('labels.expirationDate'),
       // lblAccept: this.$i18n.t('labels.accept'),
       lblPrescriptionTokenId: this.$i18n.t('labels.prescriptionsTokenId'),
+      lblPatientAddress: this.$i18n.t('labels.patientAddress'),
       prescriptionsFulfilled: [],
       prescriptionsWaiting: [],
       prescriptionsTokenId: null,
@@ -102,7 +103,7 @@ export default {
   },
 
   async created() {
-    this.patientAddress = 'Patient Address';
+    this.patientAddress = this.lblPatientAddress;
     await this.getFulfilledPrescriptions();
     setInterval(this.getFulfilledPrescriptions, 10000);
   },

@@ -63,6 +63,7 @@
 
 .welcome-logo {
   height: 2rem;
+  margin-bottom: -0.4rem;
 }
 
   .welcome-logo:hover {

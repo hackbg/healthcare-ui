@@ -9,6 +9,7 @@
       "prescriptions": "Рецепти",
       "signout": "Изход",
       "signin": "Вход",
+      "logedOut": "Излязохте от системата успешно",
       "language": {
         "en": "EN",
         "bg": "BG"
@@ -34,7 +35,9 @@
     "send": "Изпрати",
     "accountBalance": "Баланс по сметка",
     "number": "Число",
-    "dropDownPlaceholder": "Избери..."
+    "dropDownPlaceholder": "Избери...",
+    "transactionUrl": "Url транзакция:",
+    "createdInsurance": "The insurace is created. Amount: "
   },
   "buttons": {
     "ok": "OK",
@@ -48,7 +51,8 @@
   "errors": {
     "err-patient-address": "Адресът на пациента не е валиден",
     "err-pharmacy-address": "Адресът на аптеката не е валиден",
-    "err-doctor-address": "Адресът на доктора не е валиден"
+    "err-doctor-address": "Адресът на доктора не е валиден",
+    "err-empty-field": "Моля попълнете полето"
   },
   "dialogs": {
     "titles": {
@@ -57,7 +61,8 @@
     "messages": {
       "select-valid-patient-addr": "Моля изберете валиден адрес на пациент",
       "select-valid-medicine": "Моля изберете валидно лекарство",
-      "select-valid-date": "Моля изберете валидна дата"
+      "select-valid-date": "Моля изберете валидна дата",
+      "sentTransaction": "Транзакцията е изпратена успешно. Моля изчакайте потвърждение..."
     }
   },
   "menu": {
@@ -67,7 +72,7 @@
     "welcome": {
       "title1": "Добре дошли в",
       "title2": "демо блокчейна за здравеопазване!",
-      "content": "Влезте в системата като различен участник<br/>и разгледайте функционалностите, които могат да бъдат използвани за всеки от тях.",
+      "content": "Влезте в системата като различен участник и разгледайте функционалностите, които могат да бъдат използвани за всеки от тях.",
       "patient": "Пациент",
       "doctor": "Доктор",
       "pharmacy": "Аптека",

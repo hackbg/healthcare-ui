@@ -1,62 +1,70 @@
 <template>
-  <div class="box">
-    <form>
-      <div class="is-flex is-justify-content-space-between">
-        <h1 class="title">
-          {{ $t('text.prescriptions.doctor-title') }}
-        </h1>
-        <button
-          type="submit"
-          class="button is-info"
-          @click="newPrescription">
-            <b-icon icon="magic"/>
-            <strong>{{ $t('buttons.create') }}</strong>
-        </button>
-      </div>
-
-      <b-field :label="lblPatientAddress">
-        <div>
-          <b-input
-            list="patient-prescription"
-            v-model="newPatient"
-            :placeholder="lblDropDownPlaceholder"
-            :invalid-feedback="errPatientAddr"
-            :state="newPatientState"
-          >
-          </b-input>
-          <datalist id="patient-prescription">
-            <option
-              v-for="patient in patients"
-              v-bind:key="patient.address">{{ patient.name }} - {{ patient.address }}
-            </option>
-          </datalist>
+  <div>
+    <div class="box">
+      <form>
+        <div class="is-flex is-justify-content-space-between">
+          <h1 class="title">
+            {{ $t('text.prescriptions.doctor-title') }}
+          </h1>
+          <button
+            type="submit"
+            class="button is-info"
+            @click="newPrescription">
+              <b-icon icon="magic"/>
+              <strong>{{ $t('buttons.create') }}</strong>
+          </button>
         </div>
-      </b-field>
 
-      <b-field :label="lblMedicines">
-        <multiselect
-          v-model="value"
-          tag-placeholder="Add this as new tag"
-          :placeholder="lblAddMedicine" label="name"
-          track-by="code"
-          :options="medicines"
-          :multiple="true">
-        </multiselect>
-      </b-field>
+        <b-field :label="lblPatientAddress">
+          <div>
+            <b-input
+              list="patient-prescription"
+              v-model="newPatient"
+              :placeholder="lblDropDownPlaceholder"
+              :invalid-feedback="errPatientAddr"
+              :state="newPatientState"
+              required
+            >
+            </b-input>
+            <datalist id="patient-prescription">
+              <option
+                v-for="patient in patients"
+                v-bind:key="patient.address">{{ patient.name }} - {{ patient.address }}
+              </option>
+            </datalist>
+          </div>
+        </b-field>
 
-      <b-field :label="lblExpirationDate">
-       <b-datepicker
-          v-model="closing"
-          icon="calendar"
-          :placeholder="lblDropDownPlaceholder"
-          horizontal-time-picker
-          rounded
-          required
-          :min-date="min"
-          :date-parser="getTimestamp" :v-model="selectedDate"
-        ></b-datepicker>
-      </b-field>
-    </form>
+        <b-field :label="lblMedicines">
+          <multiselect
+            v-model="value"
+            tag-placeholder="Add this as new tag"
+            :placeholder="lblAddMedicine" label="name"
+            track-by="code"
+            :options="medicines"
+            :multiple="true"
+            required>
+          </multiselect>
+        </b-field>
+
+        <b-field :label="lblExpirationDate">
+        <b-datepicker
+            v-model="closing"
+            icon="calendar"
+            :placeholder="lblDropDownPlaceholder"
+            horizontal-time-picker
+            rounded
+            required
+            :min-date="min"
+            :date-parser="getTimestamp" :v-model="selectedDate"
+          ></b-datepicker>
+        </b-field>
+      </form>
+    </div>
+    <div class="is-flex is-justify-content-space-between">
+      <span class="transaction-lbl-url title">{{ lblTransaction }}</span>
+      <a :href="transactionURL" class="transaction-url title">{{ transactionURL }}</a>
+    </div> 
   </div>
 </template>
 
@@ -88,6 +96,7 @@ export default {
       newPatient: '',
       newPatientState: null,
       errPatientAddr: this.$i18n.t('errors.err-patient-address'),
+      failSendTransaction: this.$i18n.t('errors.err-transaction-send'),
       lblAddMedicine: this.$i18n.t('labels.add-medicine'),
       lblPatientAddress: this.$i18n.t('labels.patientAddress'),
       lblMedicines: this.$i18n.t('labels.medicines'),
@@ -100,6 +109,8 @@ export default {
       selectedDate: null,
       min: minDate,
       closing: null,
+      lblTransaction: '',
+      transactionURL: '',
     };
   },
   methods: {
@@ -142,15 +153,35 @@ export default {
       }
 
       try {
-        const res = await PrescriptionsABI.getContract().methods.createPrescription(prescriptionMeds.join(','), patient, this.selectedDate).send({ from: web3.currentProvider.selectedAddress });
-        this.transactionURL =  `https://ropsten.etherscan.io/tx/${res.transactionHash}`;
-        const transactionHash = `transaction hash: ${res.transactionHash}`;
+        PrescriptionsABI.getContract().methods.createPrescription(prescriptionMeds.join(','), patient, this.selectedDate).send({ from: web3.currentProvider.selectedAddress }, async (error, transactionHash) => {
+        if(error) {
+          Vue.$toast.open({
+            message: this.failSendTransaction,
+            type: 'error',
+            duration: 3000,
+            pauseOnHover: true,
+            position: 'top-right',
+          });
+          return;
+        }
+        this.transactionURL =  `https://ropsten.etherscan.io/tx/${transactionHash}`;
+        this.lblTransaction = this.$i18n.t('labels.transactionUrl');
+        transactionHash = `transaction hash: ${res.transactionHash}`;
+
+        this.newPatient = '';
+        this.medicines = [];
+        this.selectedDate = "";
+
         Vue.$toast.open({
           message: transactionHash,
           type: 'success',
           duration: 3000,
           pauseOnHover: true,
           position: 'top-right',
+        });
+        const pendingTxHashes = this.$store.state.pendingTxHashes;
+        pendingTxHashes.push({tx: transactionHash, msg:  this.$i18n.t('labels.createdInsurance') + insuranceAmmount});
+        this.$store.commit('pendingTxHashes', pendingTxHashes);
         });
       }
       catch(ex) {

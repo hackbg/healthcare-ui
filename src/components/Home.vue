@@ -11,7 +11,7 @@
       {{ $t('text.home.title') }}
     </div> -->
 
-    <b-carousel interval="9000" pause-hover="true">
+    <!-- <b-carousel interval="9000" pause-hover="true">
       <b-carousel-item v-for="(carousel, i) in carousels" :key="i">
         <section :class="`hero is-medium is-${carousel.color}`">
           <div class="hero-body has-text-centered">
@@ -19,7 +19,10 @@
           </div>
         </section>
       </b-carousel-item>
-    </b-carousel>
+    </b-carousel> -->
+    <img src="@/assets/img/healthcare.png"/>
+
+
     <!-- <div class="home-content">
       <div class="first-hm">
         <span v-html="$t('text.home.content')"></span>
@@ -36,19 +39,19 @@ export default {
   props: {
     msg: String,
   },
-  data() {
-    return {
-      carousels: [
-        { text: 'Doctors can make prescriptions.', color: 'primary' },
-        { text: 'Patients can receive online prescription with up to 18 medicines in it.', color: 'success' },
-        { text: 'Pharmacies can check for online prescription and sell the prescribed medicines.', color: 'warning' },
-        { text: 'The goal is to avoid medicines fraud.', color: 'danger' },
-        { text: `The doctor can't prescribe medicines for which doesn't have right. For example not legal or too expensive.`, color: 'primary' },
-        { text: `Fraudsters can't falsify prescriptons. For examle fake prescriptions with free medicines and sell them after.`, color: 'warning' },
-        { text: `Patients can't rewrite prescriptions.`, color: 'primary' },
-        { text: `Pharmacies can't lie to the goverment that they have given more free and reduced medicines than they realy did.`, color: 'success' },
-      ]
-    }
-  }
+  // data() {
+  //   return {
+  //     carousels: [
+  //       { text: 'Doctors can make prescriptions.', color: 'primary' },
+  //       { text: 'Patients can receive online prescription with up to 18 medicines in it.', color: 'success' },
+  //       { text: 'Pharmacies can check for online prescription and sell the prescribed medicines.', color: 'warning' },
+  //       { text: 'The goal is to avoid medicines fraud.', color: 'danger' },
+  //       { text: `The doctor can't prescribe medicines for which doesn't have right. For example not legal or too expensive.`, color: 'primary' },
+  //       { text: `Fraudsters can't falsify prescriptons. For examle fake prescriptions with free medicines and sell them after.`, color: 'warning' },
+  //       { text: `Patients can't rewrite prescriptions.`, color: 'primary' },
+  //       { text: `Pharmacies can't lie to the government that they have given more free and reduced medicines than they really did.`, color: 'success' },
+  //     ]
+  //   }
+  // }
 };
 </script>
