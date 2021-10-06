@@ -5,16 +5,14 @@
         <div class="title">
           {{ $t('text.pharmacy.title1') }}
         </div>
-        <b-button
-          class="button is-primary"
-          @click="receivedPrescription">
-            <b-icon icon="magic"/>
-            <strong>{{ $t('buttons.send') }}</strong>
+        <b-button class="button is-primary" @click="receivedPrescription">
+          <b-icon icon="magic" />
+          <strong>{{ $t('buttons.send') }}</strong>
         </b-button>
       </div>
 
       <b-field :label="lblPrescriptionTokenId">
-        <b-input required v-model="prescriptionsTokenId"/>
+        <b-input required v-model="prescriptionsTokenId" />
       </b-field>
     </div>
 
@@ -27,25 +25,30 @@
       </p>
       <div v-else>
         <b-table :data="prescriptionsFulfilled">
-          <b-table-column field="prescriptions" :label=this.lblPrescriptions v-slot="props">
+          <b-table-column field="prescriptions" :label="this.lblPrescriptions" v-slot="props">
             {{ props.row.prescriptions }}
           </b-table-column>
 
-          <b-table-column field="medicines" :label=this.lblMedicines v-slot="props">
+          <b-table-column field="medicines" :label="this.lblMedicines" v-slot="props">
             {{ props.row.medicines }}
           </b-table-column>
 
-          <b-table-column field="expiration_Date" :label=this.lblExpirationDate v-slot="props">
+          <b-table-column field="expiration_Date" :label="this.lblExpirationDate" v-slot="props">
             {{ props.row.expiration_Date }}
           </b-table-column>
         </b-table>
       </div>
+    </div>
+    <div class="is-flex is-justify-content-space-between">
+      <span class="transaction-lbl-url title">{{ lblTransaction }}</span>
+      <a target="_blank" :href="transactionURL" class="transaction-url title">{{ transactionURL }}</a>
     </div>
   </div>
 </template>
 
 <script>
 /* eslint-disable */
+import Vue from 'vue';
 import PrescriptionsABI from '../web3/prescriptionsABI';
 
 export default {
@@ -56,6 +59,7 @@ export default {
   data() {
     return {
       errPatientAddr: this.$i18n.t('errors.err-patient-address'),
+      failSendTransaction: this.$i18n.t('errors.err-transaction-send'),
       lblPrescriptions: this.$i18n.t('labels.prescriptions'),
       lblMedicines: this.$i18n.t('labels.medicines'),
       lblExpirationDate: this.$i18n.t('labels.expirationDate'),
@@ -65,6 +69,8 @@ export default {
       prescriptionsFulfilled: [],
       prescriptionsWaiting: [],
       prescriptionsTokenId: null,
+      lblTransaction: '',
+      transactionURL: '',
     };
   },
   computed: {
@@ -74,21 +80,69 @@ export default {
   },
   methods: {
     async receivedPrescription() {
-      const account = window.web3.currentProvider.selectedAddress;
-      const address = await PrescriptionsABI.getContract().methods.ownerOf(this.prescriptionsTokenId).call();
+      const account = this.$store.state.web3.currentProvider.selectedAddress;
+      try {
+      const address = await PrescriptionsABI.getContract()
+        .methods.ownerOf(this.prescriptionsTokenId)
+        .call();
       // console.log(address);
       // const approved = await PrescriptionsABI.getContract().methods.getApproved(this.prescriptionsTokenId).call()
       // console.log(approved);
-      await PrescriptionsABI.getContract().methods.transferFrom(address, account, Number(this.prescriptionsTokenId)).send({ from: account });
+      PrescriptionsABI.getContract()
+        .methods.transferFrom(address, account, Number(this.prescriptionsTokenId))
+        .send({from: account},
+        async (error, transactionHash) => {
+          if (error) {
+            Vue.$toast.open({
+              message: this.failSendTransaction,
+              type: 'error',
+              duration: 3000,
+              pauseOnHover: true,
+              position: 'top-right',
+            });
+            return;
+          }
+          this.transactionURL = `https://ropsten.etherscan.io/tx/${transactionHash}`;
+          this.lblTransaction = this.$i18n.t('labels.transactionUrl');
+
+          this.prescriptionsTokenId = '';
+
+          Vue.$toast.open({
+            message: this.sentTransaction,
+            type: 'success',
+            duration: 3000,
+            pauseOnHover: true,
+            position: 'top-right',
+          });
+          const pendingTxHashes = this.$store.state.pendingTxHashes;
+          pendingTxHashes.push({
+            tx: transactionHash,
+            msg: this.$i18n.t('labels.acceptedPrescription'),
+          });
+          this.$store.commit('pendingTxHashes', pendingTxHashes);
+        });
+      } catch (ex) {
+        Vue.$toast.open({
+          message: ex,
+          type: 'error',
+          duration: 3000,
+          pauseOnHover: true,
+          position: 'top-right',
+        });
+      }
     },
 
     async getFulfilledPrescriptions() {
       const prescriptions = [];
-      const account = window.web3.currentProvider.selectedAddress;
-      const accPrescriptions = await PrescriptionsABI.getContract().methods.balanceOf(account).call();
+      const account = this.$store.state.web3.currentProvider.selectedAddress;
+      const accPrescriptions = await PrescriptionsABI.getContract()
+        .methods.balanceOf(account)
+        .call();
 
-      for(let i = 0; i < accPrescriptions; i++) {
-        const tokenId = await PrescriptionsABI.getContract().methods.tokenOfOwnerByIndex(account, i).call();
+      for (let i = 0; i < accPrescriptions; i++) {
+        const tokenId = await PrescriptionsABI.getContract()
+          .methods.tokenOfOwnerByIndex(account, i)
+          .call();
         const medicines = await PrescriptionsABI.getContract().methods.tokenURI(tokenId).call();
         const expire = await PrescriptionsABI.getContract().methods.expire(tokenId).call();
         prescriptions.push({

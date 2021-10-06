@@ -1,17 +1,14 @@
 <template>
   <div>
     <div class="box">
-      <form>
+      <form v-on:submit.prevent="newPrescription">
         <div class="is-flex is-justify-content-space-between">
           <h1 class="title">
             {{ $t('text.prescriptions.doctor-title') }}
           </h1>
-          <button
-            type="submit"
-            class="button is-info"
-            @click="newPrescription">
-              <b-icon icon="magic"/>
-              <strong>{{ $t('buttons.create') }}</strong>
+          <button type="submit" class="button is-info">
+            <b-icon icon="magic" />
+            <strong>{{ $t('buttons.create') }}</strong>
           </button>
         </div>
 
@@ -27,51 +24,52 @@
             >
             </b-input>
             <datalist id="patient-prescription">
-              <option
-                v-for="patient in patients"
-                v-bind:key="patient.address">{{ patient.name }} - {{ patient.address }}
+              <option v-for="patient in patients" v-bind:key="patient.address">
+                {{ patient.name }} - {{ patient.address }}
               </option>
             </datalist>
           </div>
         </b-field>
 
+<!-- TODO: with that options in the field down can add msg wit error type="is-danger"
+            message="Something went wrong with this field" -->
         <b-field :label="lblMedicines">
           <multiselect
             v-model="value"
             tag-placeholder="Add this as new tag"
-            :placeholder="lblAddMedicine" label="name"
+            :placeholder="lblAddMedicine"
+            label="name"
             track-by="code"
             :options="medicines"
             :multiple="true"
-            required>
+          >
           </multiselect>
         </b-field>
 
         <b-field :label="lblExpirationDate">
-        <b-datepicker
-            v-model="closing"
+          <b-datepicker
+            v-model="selectedDate"
             icon="calendar"
             :placeholder="lblDropDownPlaceholder"
+            :date-parser="getTimestamp"
             horizontal-time-picker
             rounded
             required
             :min-date="min"
-            :date-parser="getTimestamp" :v-model="selectedDate"
           ></b-datepicker>
         </b-field>
       </form>
     </div>
     <div class="is-flex is-justify-content-space-between">
       <span class="transaction-lbl-url title">{{ lblTransaction }}</span>
-      <a :href="transactionURL" class="transaction-url title">{{ transactionURL }}</a>
-    </div> 
+      <a target="_blank" :href="transactionURL" class="transaction-url title">{{ transactionURL }}</a>
+    </div>
   </div>
 </template>
 
 <script>
 /* eslint-disable */
 import Vue from 'vue';
-import web3 from "../web3/web3";
 import patientsData from '../data/patients.json';
 import Multiselect from 'vue-multiselect';
 import MedicinesABI from '../web3/medicinesABI';
@@ -83,7 +81,7 @@ export default {
     msg: String,
   },
   components: {
-    Multiselect
+    Multiselect,
   },
   data() {
     const now = new Date();
@@ -111,80 +109,92 @@ export default {
       closing: null,
       lblTransaction: '',
       transactionURL: '',
+      magicDateNumber: 24 * 60 * 60, //TODO: check the math
     };
   },
   methods: {
     async newPrescription() {
       const patient = this.newPatient.split(' - ')[1];
-      const prescriptionMeds = this.value.map(v => v.name);
+      const prescriptionMeds = this.value.map((v) => v.name);
 
-      if(patient === undefined) {
-        const msg = this.$i18n.t('dialogs.messages.select-valid-patient-addr');
-        Vue.$toast.open({
-          message: msg,
-          type: 'error',
-          duration: 3000,
-          pauseOnHover: true,
-          position: 'top-right',
-        });
-        return;
-      }
-      else if(prescriptionMeds.length === 0) {
-        const msg = this.$i18n.t('dialogs.messages.select-valid-medicine');
-        Vue.$toast.open({
-          message: msg,
-          type: 'error',
-          duration: 3000,
-          pauseOnHover: true,
-          position: 'top-right',
-        });
-        return;
-      }
-      else if(this.selectedDate === null) { //TODO: add validation for this.selectedDate <= date.now
-        const msg = this.$i18n.t('dialogs.messages.select-valid-date');
-        Vue.$toast.open({
-          message: msg,
-          type: 'error',
-          duration: 3000,
-          pauseOnHover: true,
-          position: 'top-right',
-        });
-        return;
-      }
+      // if (patient === undefined) {
+      //   const msg = this.$i18n.t('dialogs.messages.select-valid-patient-addr');
+      //   Vue.$toast.open({
+      //     message: msg,
+      //     type: 'error',
+      //     duration: 3000,
+      //     pauseOnHover: true,
+      //     position: 'top-right',
+      //   });
+      //   return;
+      // } else if (prescriptionMeds.length === 0) {
+      //   const msg = this.$i18n.t('dialogs.messages.select-valid-medicine');
+      //   Vue.$toast.open({
+      //     message: msg,
+      //     type: 'error',
+      //     duration: 3000,
+      //     pauseOnHover: true,
+      //     position: 'top-right',
+      //   });
+      //   return;
+      // } else if (this.selectedDate === null) {
+      //   console.log('debug date');
+      //   console.log(this.selectedDate);
+      //   //TODO: add validation for this.selectedDate <= date.now
+      //   const msg = this.$i18n.t('dialogs.messages.select-valid-date');
+      //   Vue.$toast.open({
+      //     message: msg,
+      //     type: 'error',
+      //     duration: 3000,
+      //     pauseOnHover: true,
+      //     position: 'top-right',
+      //   });
+      //   return;
+      // }
 
       try {
-        PrescriptionsABI.getContract().methods.createPrescription(prescriptionMeds.join(','), patient, this.selectedDate).send({ from: web3.currentProvider.selectedAddress }, async (error, transactionHash) => {
-        if(error) {
-          Vue.$toast.open({
-            message: this.failSendTransaction,
-            type: 'error',
-            duration: 3000,
-            pauseOnHover: true,
-            position: 'top-right',
-          });
-          return;
-        }
-        this.transactionURL =  `https://ropsten.etherscan.io/tx/${transactionHash}`;
-        this.lblTransaction = this.$i18n.t('labels.transactionUrl');
-        transactionHash = `transaction hash: ${res.transactionHash}`;
+        // PrescriptionsABI.getContract()
+        //   .methods.createPrescription(prescriptionMeds.join(','), patient, this.selectedDate)
+        const date = Math.ceil(new Date(this.selectedDate) - new Date() / 1000) + this.magicDateNumber;
+        PrescriptionsABI.getContract()
+          .methods.createPrescription(prescriptionMeds.join(','), patient, date)
+          .send(
+            {from: this.$store.state.web3.currentProvider.selectedAddress},
+            async (error, transactionHash) => {
+              if (error) {
+                Vue.$toast.open({
+                  message: this.failSendTransaction,
+                  type: 'error',
+                  duration: 3000,
+                  pauseOnHover: true,
+                  position: 'top-right',
+                });
+                return;
+              }
+              this.transactionURL = `https://ropsten.etherscan.io/tx/${transactionHash}`;
+              this.lblTransaction = this.$i18n.t('labels.transactionUrl');
+              transactionHash = `transaction hash: ${transactionHash}`;
 
-        this.newPatient = '';
-        this.medicines = [];
-        this.selectedDate = "";
+              this.newPatient = '';
+              this.medicines = [];
+              this.selectedDate = '';
 
-        Vue.$toast.open({
-          message: transactionHash,
-          type: 'success',
-          duration: 3000,
-          pauseOnHover: true,
-          position: 'top-right',
-        });
-        const pendingTxHashes = this.$store.state.pendingTxHashes;
-        pendingTxHashes.push({tx: transactionHash, msg:  this.$i18n.t('labels.createdInsurance') + insuranceAmmount});
-        this.$store.commit('pendingTxHashes', pendingTxHashes);
-        });
-      }
-      catch(ex) {
+              Vue.$toast.open({
+                message: transactionHash,
+                type: 'success',
+                duration: 3000,
+                pauseOnHover: true,
+                position: 'top-right',
+              });
+              const pendingTxHashes = this.$store.state.pendingTxHashes;
+              pendingTxHashes.push({
+                tx: transactionHash,
+                msg: this.$i18n.t('labels.createdPrescription'),
+              });
+              this.$store.commit('pendingTxHashes', pendingTxHashes);
+            }
+          );
+      } catch (ex) {
         Vue.$toast.open({
           message: ex,
           type: 'error',
@@ -195,30 +205,24 @@ export default {
       }
     },
 
-    // onContext(ctx) {
-    //   console.log('context'); //TODO:
-    //   this.context = ctx;
-    //   this.selectedDate = Math.ceil(new Date(ctx.activeDate) - new Date()/1000) + 24*60*60; //TODO: check the math
-    // },
     getTimestamp(date) {
-      return Math.ceil(new Date(ctx.activeDate) - new Date()/1000) + 24*60*60; //TODO: check the math
+      return Math.ceil(new Date(date) - new Date() / 1000) + this.magicDateNumber;
     },
-
-  },
+  }, 
   computed: {
     userType() {
       return this.$store.state.userType;
     },
   },
   async created() {
-    const count = await MedicinesABI.getContract().methods.medicinesCount.call()._method.outputs.length;
-    for(let i = 0; i <= count; i++) {
+    const count = await MedicinesABI.getContract().methods.medicinesCount.call()._method.outputs
+      .length;
+    for (let i = 0; i <= count; i++) {
       const medicine = await MedicinesABI.getContract().methods.medicines(i).call();
-      const option = { name: medicine, code: i, value: i };
+      const option = {name: medicine, code: i, value: i};
       this.medicines.push(option);
     }
-  }
-  
+  },
 };
 </script>
 

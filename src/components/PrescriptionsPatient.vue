@@ -5,22 +5,35 @@
     </p>
     <div v-else>
       <b-table :data="prescriptions" class="user-table">
-        <b-table-column field="prescriptions" :label=this.lblPrescriptions centered v-slot="props">
+        <b-table-column
+          field="prescriptions"
+          :label="this.lblPrescriptions"
+          centered
+          v-slot="props"
+        >
           {{ props.row.prescriptions }}
         </b-table-column>
 
-        <b-table-column field="medicines" :label=this.lblMedicines centered v-slot="props">
+        <b-table-column field="medicines" :label="this.lblMedicines" centered v-slot="props">
           {{ props.row.medicines }}
         </b-table-column>
 
-        <b-table-column field="expiration_Date" :label=this.lblExpirationDate centered v-slot="props">
+        <b-table-column
+          field="expiration_Date"
+          :label="this.lblExpirationDate"
+          centered
+          v-slot="props"
+        >
           {{ props.row.expiration_Date }}
         </b-table-column>
 
-        <b-table-column field="send" :label=this.lblSend centered v-slot="props">
+        <b-table-column field="send" :label="this.lblSend" centered v-slot="props">
           <b-button
             v-if="!props.row.send"
-            @click="selectedId = props.row.prescriptions; isComponentModalActive = true"
+            @click="
+              selectedId = props.row.prescriptions;
+              isComponentModalActive = true;
+            "
             size="sm"
             class="button is-success"
           >
@@ -34,7 +47,7 @@
           >
             {{ $t('buttons.revert') }}
           </b-button>
-        </b-table-column> 
+        </b-table-column>
       </b-table>
     </div>
     <b-modal
@@ -44,9 +57,10 @@
       :destroy-on-hide="false"
       aria-role="dialog"
       :aria-label="lblSendPrescription"
-      aria-modal>
-      <template #default="props">
-        <PrescriptionSend :tokenID="selectedId" @close="props.close"></PrescriptionSend>
+      aria-modal
+    >
+      <template #default="props" has-modal-card trap-focus :destroy-on-hide="false">
+        <prescription-send :tokenID="selectedId" @close="props.close"></prescription-send>
       </template>
     </b-modal>
   </div>
@@ -57,7 +71,6 @@
 import Vue from 'vue';
 import PrescriptionSend from './PrescriptionSend.vue';
 import PrescriptionsABI from '../web3/prescriptionsABI';
-
 
 export default {
   name: 'PrescriptionsPatient',
@@ -90,19 +103,25 @@ export default {
   methods: {
     async getPrescriptions() {
       const prescriptions = [];
-      const account = window.web3.currentProvider.selectedAddress;
-      const accPrescriptions = await PrescriptionsABI.getContract().methods.balanceOf(account).call();
-      for(let i = 0; i < accPrescriptions; i++) {
-        const tokenId = await PrescriptionsABI.getContract().methods.tokenOfOwnerByIndex(account, i).call();
+      const account = this.$store.state.web3.currentProvider.selectedAddress;
+      const accPrescriptions = await PrescriptionsABI.getContract()
+        .methods.balanceOf(account)
+        .call();
+      for (let i = 0; i < accPrescriptions; i++) {
+        const tokenId = await PrescriptionsABI.getContract()
+          .methods.tokenOfOwnerByIndex(account, i)
+          .call();
         const medicines = await PrescriptionsABI.getContract().methods.tokenURI(tokenId).call();
         const expire = await PrescriptionsABI.getContract().methods.expire(tokenId).call();
-        const send = await PrescriptionsABI.getContract().methods.getApproved(tokenId).call() !== "0x0000000000000000000000000000000000000000";
+        const send =
+          (await PrescriptionsABI.getContract().methods.getApproved(tokenId).call()) !==
+          '0x0000000000000000000000000000000000000000';
         // console.log(send);
         prescriptions.push({
           prescriptions: tokenId,
           medicines: medicines,
           expiration_Date: new Date(Number(expire)).toDateString(),
-          send: send
+          send: send,
         });
       }
 
@@ -111,32 +130,39 @@ export default {
 
     async revertSend(tokenID) {
       try {
-        PrescriptionsABI.getContract().methods.approve("0x0000000000000000000000000000000000000000", Number(tokenID)).send({ from: web3.currentProvider.selectedAddress }, async (error, transactionHash) => {
-        if(error) {
-            Vue.$toast.open({
-              message: this.failSendTransaction,
-              type: 'error',
-              duration: 3000,
-              pauseOnHover: true,
-              position: 'top-right',
-            });
-            return;
-          }
-        
-          transactionHash = `transaction hash: ${res.transactionHash}`;
-          Vue.$toast.open({
-            message: transactionHash,
-            type: 'success',
-            duration: 3000,
-            pauseOnHover: true,
-            position: 'top-right',
-          });
-          const pendingTxHashes = this.$store.state.pendingTxHashes;
-          pendingTxHashes.push({tx: transactionHash, msg:  this.$i18n.t('labels.createdInsurance') + insuranceAmmount});
-          this.$store.commit('pendingTxHashes', pendingTxHashes);
-        });
-      }
-      catch(ex) {
+        PrescriptionsABI.getContract()
+          .methods.approve('0x0000000000000000000000000000000000000000', Number(tokenID))
+          .send(
+            {from: this.$store.state.web3.currentProvider.selectedAddress},
+            async (error, transactionHash) => {
+              if (error) {
+                Vue.$toast.open({
+                  message: this.failSendTransaction,
+                  type: 'error',
+                  duration: 3000,
+                  pauseOnHover: true,
+                  position: 'top-right',
+                });
+                return;
+              }
+
+              transactionHash = `transaction hash: ${res.transactionHash}`;
+              Vue.$toast.open({
+                message: transactionHash,
+                type: 'success',
+                duration: 3000,
+                pauseOnHover: true,
+                position: 'top-right',
+              });
+              const pendingTxHashes = this.$store.state.pendingTxHashes;
+              pendingTxHashes.push({
+                tx: transactionHash,
+                msg: this.$i18n.t('labels.sentPrescription'),
+              });
+              this.$store.commit('pendingTxHashes', pendingTxHashes);
+            }
+          );
+      } catch (ex) {
         Vue.$toast.open({
           message: ex,
           type: 'error',

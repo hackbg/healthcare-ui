@@ -48,10 +48,19 @@
     font-weight: bold !important;
   }
 
-  .transaction-lbl-url {
-    font-size: 12px;
-    margin-top:-0.1rem;
-  }
-   .transaction-url {
-     font-size: 11px;
-   }
+.transaction-lbl-url {
+  font-size: 12px;
+  margin-top:-0.1rem;
+}
+
+.transaction-url {
+  font-size: 11px;
+}
+
+a.dropdown-item.is-active {
+  background-color: inherit !important;
+}
+
+.modal-close {
+  display: none !important;
+}

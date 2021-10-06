@@ -37,7 +37,11 @@
     "number": "Число",
     "dropDownPlaceholder": "Избери...",
     "transactionUrl": "Url транзакция:",
-    "createdInsurance": "The insurace is created. Amount: "
+    "createdInsurance": "Застраховката е създадена. Сума: ",
+    "createdPrescription" : "Рецептата е създадена.",
+    "acceptedPrescription": "Рецептата е приета",
+    "sentPrescription": "Рецептата е изпратена",
+    "receivedPrescription": "The prescription is received"
   },
   "buttons": {
     "ok": "OK",

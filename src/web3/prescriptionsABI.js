@@ -1,4 +1,4 @@
-import web3 from './web3';
+import store from '../store'
 
 // const address = '0x2376F21020FF9735FA3F8121E799eB8bBdBA9A5A'; // THE OLD CONTRACT ADDRESS
 const address = '0xDC502CEf193b727eD6AD60df2f420487622269b6'; // THE CONTRACT ADDRESS
@@ -548,14 +548,8 @@ const prescriptionsABI = [
   }
 ]; // THE ABI
 
-let contract = new web3.eth.Contract(prescriptionsABI, localStorage.address || address);
-
 const module = {
-  getContract: () => contract,
-  changeAddress: (addr) => {
-    localStorage.address = addr;
-    contract = new web3.eth.Contract(prescriptionsABI, addr);
-  }
+  getContract: () => new store.state.web3.eth.Contract(prescriptionsABI, localStorage.address || address),
 }
 
 Object.freeze(module); // doesn't allow to add new properties to the object

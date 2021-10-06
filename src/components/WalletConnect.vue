@@ -3,15 +3,15 @@
     Please install MetaMask or another Ethereum compatible wallet.
   </b-message>
   <b-message
-    v-else-if="!factoryContract && connected"
+    v-else-if="!ropsten && connected"
     type="is-warning"
-    :title="`Not available on ${network}`"
+    :title="`Not available`"
     :closable="false"
   >
     Please switch to Ropsten Test Network.
   </b-message>
   <b-message
-    v-else-if="ethereum && !connected"
+    v-else-if="firstCheck && ethereum && !connected"
     type="is-warning"
     title="Not connected"
     :closable="false"
@@ -21,14 +21,23 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-// import ethersConnect from '@/store/modules/ethers/ethersConnect';
-
 export default {
-  computed: {
-    ...mapState('ethers', ['connected', 'network']),
-    // ...mapState('campaigns', ['factoryContract']),
-    // ethereum: () => ethersConnect.getEthereum(),
+  data() {
+    return {
+      ropsten: false,
+      connected: false,
+      firstCheck: false
+    }
   },
+  computed: {
+    ethereum: () => window.ethereum,
+  },
+  created() {
+    setInterval(async () => {
+      this.ropsten = await this.$store.state.web3.eth.net.getNetworkType() === "ropsten";
+      this.connected = await this.$store.state.web3.eth.net.isListening();
+      this.firstCheck = true;
+    }, 1000);
+  }
 };
 </script>

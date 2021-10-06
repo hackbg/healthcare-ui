@@ -21,7 +21,10 @@ npm run lint
 ```
 
 ### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).  
+See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Overview
+This repo includes responsive single-page application written with web3, Vue.js and Buefy and the ABIs for the smart contracts which can be found in the repo [healthcare](https://github.com/hackbg/healthcare)
 
 ### Addressess for my test network
 Account 1 - Doctor  

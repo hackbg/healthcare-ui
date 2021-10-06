@@ -37,7 +37,11 @@
     "number": "Number",
     "dropDownPlaceholder": "Click to select...",
     "transactionUrl": "Transaction url:",
-    "createdInsurance": "The insurace is created. Amount: "
+    "createdInsurance": "The insurace is created. Amount: ",
+    "createdPrescription" : "The prescription is created",
+    "acceptedPrescription": "The prescription is accepted",
+    "sentPrescription": "The prescription is sent",
+    "receivedPrescription": "The prescription is received"
   },
   "buttons": {
     "ok": "OK",

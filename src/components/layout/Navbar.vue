@@ -3,7 +3,7 @@
     <header class="header">
       <b-navbar class="container is-max-desktop">
         <template slot="brand">
-          <b-navbar-item tag="router-link" :to="{ path: '/' }">
+          <b-navbar-item tag="router-link" :to="{path: '/'}">
             <div>
               <b-icon icon="heartbeat" type="is-primary" />
               <h1 class="logo title is-6 has-text-primary">
@@ -45,12 +45,17 @@
             </b-navbar-item>
             <b-navbar-item tag="div">
               <user-address
-                v-if="userType === 'patient' || userType === 'insurer' || userType === 'doctor' || userType === 'pharmacy'"
+                v-if="
+                  userType === 'patient' ||
+                  userType === 'insurer' ||
+                  userType === 'doctor' ||
+                  userType === 'pharmacy'
+                "
                 :address="userType"
                 class="has-background-primary-light mt-1"
                 truncate
               />
-            </b-navbar-item> 
+            </b-navbar-item>
             <b-navbar-item tag="div" class="right-nav-item">
               <b-button
                 inverted
@@ -67,7 +72,10 @@
                 inverted
                 v-else
                 size="is-primary is-small"
-                @click="signIn(); isComponentModalActive = true"
+                @click="
+                  signIn();
+                  isComponentModalActive = true;
+                "
                 class="small-nav-element"
                 id="login"
               >
@@ -84,7 +92,8 @@
       trap-focus
       :destroy-on-hide="false"
       aria-role="dialog"
-      aria-modal>
+      aria-modal
+    >
       <template #default="props">
         <Login @close="props.close"></Login>
       </template>
@@ -103,38 +112,38 @@ export default {
   components: {
     LanguageSwitcher,
     UserAddress,
-    Login
+    Login,
   },
   name: 'Navbar',
   props: {
-    msg: String
+    msg: String,
   },
   data() {
     return {
       isComponentModalActive: false,
       lblLogedOut: this.$i18n.t('labels.navbar.logedOut'),
-    }
+    };
   },
   computed: {
     userType() {
       return this.$store.state.userType;
-    }
+    },
   },
   methods: {
     signIn() {
-      if(this.userType !== undefined) {
+      if (this.userType !== undefined) {
         Vue.$toast.open({
           message: this.lblLogedOut,
           type: 'success',
-          duration: 3000,
+          duration: 1000,
           pauseOnHover: true,
           position: 'top-right',
         });
       }
       this.$store.commit('userType', undefined);
     },
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>

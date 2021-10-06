@@ -4,37 +4,30 @@
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">{{ $t('labels.sendPrescription') }}</p>
-          <button
-            type="button"
-            class="delete"
-            @click="$emit('close')"/>
+          <button type="button" class="delete" @click="$emit('close')" />
         </header>
         <section class="modal-card-body">
           <b-field :label="pharmacyAddress">
-          <div>
-            <b-input list="my-list-id"
-              v-model="newPharmacy"
-              :placeholder="lblDropDownPlaceholder"
-            ></b-input>
-            <datalist id="my-list-id">
-              <option
-                v-for="pharmacy in pharmacies"
-                v-bind:key="pharmacy.address">{{ pharmacy.name }} - {{ pharmacy.address }}
-              </option>
-            </datalist>
-          </div>
+            <div>
+              <b-input
+                list="my-list-id"
+                v-model="newPharmacy"
+                :placeholder="lblDropDownPlaceholder"
+                required
+              ></b-input>
+              <datalist id="my-list-id">
+                <option v-for="pharmacy in pharmacies" v-bind:key="pharmacy.address">
+                  {{ pharmacy.name }} - {{ pharmacy.address }}
+                </option>
+              </datalist>
+            </div>
           </b-field>
         </section>
         <footer class="modal-card-foot">
-          <b-button
-            :label="btnClose"
-            @click="handleClose" />
-          <b-button
-            :label="btnOK"
-            @click="handleOk"
-            type="is-primary" />
+          <b-button :label="btnClose" @click="handleClose"/>
+          <b-button :label="btnOK" @click="handleOk" type="is-primary" id="btn-ok"/>
         </footer>
-      <!-- <b-form-group
+        <!-- <b-form-group
         :label="pharmacyAddress"
         label-for="pharmacy-address-input"
         invalid-feedback="errPharmacyAddr"
@@ -52,7 +45,6 @@
 
 <script>
 import Vue from 'vue';
-import web3 from "../web3/web3";
 import prescriptionsABI from '../web3/prescriptionsABI';
 import '../assets/css/app.css';
 import pharmaciesData from '../data/pharmacies.json';
@@ -60,7 +52,7 @@ import pharmaciesData from '../data/pharmacies.json';
 export default {
   name: 'PrescriptionSend',
   props: {
-    tokenID: String
+    tokenID: String,
   },
   data() {
     return {
@@ -68,11 +60,14 @@ export default {
       pharmacyAddress: this.$i18n.t('labels.pharmacyAddress'),
       errPharmacyAddr: this.$i18n.t('errors.err-pharmacy-address'),
       lblDropDownPlaceholder: this.$i18n.t('labels.dropDownPlaceholder'),
+      failSendTransaction: this.$i18n.t('errors.err-transaction-send'),
+      sentPrescription: this.$i18n.t('labels.sentPrescription'),
+      receivedPrescription: this.$i18n.t('labels.receivedPrescription'),
       btnClose: this.$i18n.t('buttons.close'),
       btnOK: this.$i18n.t('buttons.ok'),
       newPharmacy: '',
       newPharmacyState: null,
-      pharmacies: pharmaciesData
+      pharmacies: pharmaciesData,
     };
   },
   methods: {
@@ -84,19 +79,19 @@ export default {
         if (this.newPharmacy === '') this.newPharmacyState = false;
         return false;
       }
-      // if(!web3.utils.isAddress(this.newPharmacy)) { //isAddress - does it is valid pharmacy address
+      // if(!this.$store.state.web3.utils.isAddress(this.newPharmacy)) { //isAddress - does it is valid pharmacy address
       //   this.newPharmacyState = false;
       //   return false;
       // }
       return true;
     },
     resetModal() {
-      this.newPharmacy = '';
+      this.newPharmacy = "";
       this.newPharmacyState = null;
     },
     handleClose() {
+      // this.resetModal();
       this.$emit('close');
-      this.resetModal();
     },
     handleOk(bvModalEvt) {
       // Prevent modal from closing
@@ -107,23 +102,45 @@ export default {
     },
     async handleSubmit() {
       // Exit when the form isn't valid
-      if (!this.checkFormValidity()) return;
+      // if (!this.checkFormValidity()) return;
       let address = this.newPharmacy;
-      if(this.newPharmacy.includes(' - ')) {
+      if (this.newPharmacy.includes(' - ')) {
         address = this.newPharmacy.split(' - ')[1];
       }
       try {
-        const res = prescriptionsABI.getContract().methods.approve(address, Number(this.tokenID)).send({ from: web3.currentProvider.selectedAddress }); // TODO: removed await because the modal doesn't close but is not the best desicion...to think about it
-        const transactionHash = `transaction hash: ${res.transactionHash}`;
+        prescriptionsABI
+          .getContract()
+          .methods.approve(address, Number(this.tokenID))
+          .send({from: this.$store.state.web3.currentProvider.selectedAddress},
+          async (error, transactionHash) => {
+          if (error) {
+            Vue.$toast.open({
+              message: this.failSendTransaction,
+              type: 'error',
+              duration: 3000,
+              pauseOnHover: true,
+              position: 'top-right',
+            });
+            return;
+            }
+            this.newPharmacy = "";
+
+         // TODO: removed await because the modal doesn't close but is not the best desicion...to think about it
         Vue.$toast.open({
-          message: transactionHash,
+          message: this.sentPrescription,
           type: 'success',
           duration: 3000,
           pauseOnHover: true,
           position: 'top-right',
         });
-      }
-      catch(ex) {
+        const pendingTxHashes = this.$store.state.pendingTxHashes;
+          pendingTxHashes.push({
+            tx: transactionHash,
+            msg: this.receivedPrescription,
+          });
+          this.$store.commit('pendingTxHashes', pendingTxHashes);
+        });
+      } catch (ex) {
         Vue.$toast.open({
           message: ex.message,
           type: 'error',

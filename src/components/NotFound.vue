@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <div class="nf not-found-text">{{ $t('labels.pageNotFound') }}</div>
-    <div class="nf not-found">404<br/></div>
+    <div class="nf not-found">404<br /></div>
   </div>
 </template>
 

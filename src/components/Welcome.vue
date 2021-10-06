@@ -1,14 +1,11 @@
 <template>
   <form ref="form" class="modal-form">
-    <div class="modal-card">
+    <div class="modal-card welcome-modal">
       <header class="modal-card-head">
         <p class="modal-card-title">
           <span v-html="$t('labels.navbar.signin')"></span>
         </p>
-        <button
-          type="button"
-          class="delete"
-          @click="$emit('close')"/>
+        <button type="button" class="delete" @click="$emit('close')" />
       </header>
       <section class="modal-card-body">
         <span v-html="$t('text.welcome.content')"></span>
@@ -27,7 +24,7 @@
           </div>
         </div>
       </section>
-      <footer class="modal-card-foot" style="font-style:oblique">
+      <footer class="modal-card-foot" style="font-style: oblique">
         <span v-html="$t('text.welcome.note')"></span>
       </footer>
     </div>
@@ -44,8 +41,9 @@
 
 <script>
 import Vue from 'vue';
-import { Row, Column } from 'vue-grid-responsive';
+import {Row, Column} from 'vue-grid-responsive';
 import '../assets/css/welcome.css';
+import createWeb3 from '../web3/web3';
 
 Vue.component('row', Row);
 Vue.component('column', Column);
@@ -53,42 +51,58 @@ Vue.component('column', Column);
 export default {
   name: 'Welcome',
   props: {
-    msg: String
+    msg: String,
   },
   data() {
     return {
       btnClose: this.$i18n.t('buttons.close'),
-    }
+    };
   },
   methods: {
     setPatient() {
+      if (!this.createWeb3()) {
+        return;
+      }
       this.$store.commit('userType', 'patient');
-      if(this.$route.path !== '/')
-        this.$router.push('/');
+      if (this.$route.path !== '/') this.$router.push('/');
       this.$emit('close');
     },
     setDoctor() {
+      if (!this.createWeb3()) {
+        return;
+      }
       // localStorage.userType = "doctor";
       this.$store.commit('userType', 'doctor');
-      if(this.$route.path !== '/')
-        this.$router.push('/');
+      if (this.$route.path !== '/') this.$router.push('/');
       this.$emit('close');
     },
     setPharmacy() {
+      if (!this.createWeb3()) {
+        return;
+      }
       // localStorage.userType = "pharmacy";
       this.$store.commit('userType', 'pharmacy');
-      if(this.$route.path !== '/')
-        this.$router.push('/');
+      if (this.$route.path !== '/') this.$router.push('/');
       this.$emit('close');
     },
     setInsurer() {
+      if (!this.createWeb3()) {
+        return;
+      }
       // localStorage.userType = "insurer";
       this.$store.commit('userType', 'insurer');
-      if(this.$route.path !== '/')
-        this.$router.push('/');
+      if (this.$route.path !== '/') this.$router.push('/');
       this.$emit('close');
     },
-  }
-}
-
+    createWeb3() {
+      return createWeb3();
+    },
+  },
+};
 </script>
+
+<style scoped>
+  .welcome-modal {
+    min-height: 22rem;
+  }
+</style>

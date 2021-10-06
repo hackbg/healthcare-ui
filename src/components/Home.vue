@@ -1,9 +1,10 @@
 <template>
   <div class="main-container home-container">
+    <wallet-connect />
     <div class="title">
       {{ $t('text.welcome.title1') }}
       <a href="https://hack.bg">
-        <img class="welcome-logo" src="@/assets/img/hack-logo.png"/>
+        <img class="welcome-logo" src="@/assets/img/hack-logo.png" />
       </a>
       {{ $t('text.welcome.title2') }}
     </div>
@@ -20,8 +21,7 @@
         </section>
       </b-carousel-item>
     </b-carousel> -->
-    <img src="@/assets/img/healthcare.png"/>
-
+    <img src="@/assets/img/healthcare.png" />
 
     <!-- <div class="home-content">
       <div class="first-hm">
@@ -33,11 +33,15 @@
 
 <script>
 import '../assets/css/home.css';
+import WalletConnect from './WalletConnect.vue';
+import createWeb3 from '../web3/web3';
 
 export default {
+  components: {WalletConnect},
   name: 'Home',
-  props: {
-    msg: String,
+  props: {},
+  mounted() {
+    createWeb3();
   },
   // data() {
   //   return {

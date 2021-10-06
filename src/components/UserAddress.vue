@@ -11,8 +11,8 @@
 export default {
   name: 'UserAddress',
   props: {
-    address: { type: String, required: true },
-    truncate: { type: Boolean, default: false },
+    address: {type: String, required: true},
+    truncate: {type: Boolean, default: false},
   },
   computed: {
     avatarUrl() {
