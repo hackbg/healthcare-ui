@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import '../assets/css/not_found.css';
-import '../assets/css/app.css';
+import '../assets/scss/not_found.scss';
+import '../assets/scss/app.scss';
 
 export default {
   name: 'NotFound',

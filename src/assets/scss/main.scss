@@ -100,6 +100,21 @@ $label-weight: 500;
 $modal-card-head-background-color: $light;
 $button-focus-box-shadow-size: 0;
 
+// Custom just for this project
+$mark-text: #af59be;
+$mark-text-color: #fefefe;
+$multiselect-tag: #b57ef2;
+$multiselect-tag-hover: #832DF4;
+$multiselect-border: #832DF4;
+$multiselect-placeholder: #832DF4;
+$wl-background-color: #AC82EB;
+$wl-hover-background-color: #832DF4;
+$wl-hover-border: #AC82EB;
+$not-found-color: #832DF4;
+$not-found-text-shadow: #7F797B;
+$not-found-text-color: #b57ef2;
+$not-found-text-test-shadow: #051632;
+
 // Import Bulma and Buefy styles
 @import '~bulma';
 @import '~buefy/src/scss/buefy';

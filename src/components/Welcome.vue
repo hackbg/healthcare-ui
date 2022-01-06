@@ -42,7 +42,7 @@
 <script>
 import Vue from 'vue';
 import {Row, Column} from 'vue-grid-responsive';
-import '../assets/css/welcome.css';
+import '../assets/scss/welcome.scss';
 import createWeb3 from '../web3/web3';
 
 Vue.component('row', Row);

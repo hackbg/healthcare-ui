@@ -13,23 +13,17 @@
         </div>
 
         <b-field :label="lblPatientAddress">
-          <div>
-            <b-input
-              list="patient-address"
-              v-model="newPatient"
-              required
-              :validation-message="msgRequired"
-              :placeholder="lblDropDownPlaceholder"
-              :invalid-feedback="errPatientAddr"
-              :state="newPatientState"
-            >
-            </b-input>
-            <datalist id="patient-address">
-              <option class="testtest" v-for="patient in patients" v-bind:key="patient.address">
-                {{ patient.name }} - {{ patient.address }}
-              </option>
-            </datalist>
-          </div>
+          <b-autocomplete
+            required
+            :open-on-focus="true"
+            v-model="newPatient"
+            :data="patientsList"
+            :validation-message="msgRequired"
+            :placeholder="lblDropDownPlaceholder"
+            :invalid-feedback="errPatientAddr"
+            :clearable="true"
+          >
+          </b-autocomplete>
         </b-field>
 
         <b-field :label="amountLbl">
@@ -65,7 +59,6 @@ export default {
   data() {
     return {
       newPatient: '',
-      newPatientState: null,
       errPatientAddr: this.$i18n.t('errors.err-patient-address'),
       amountLbl: this.$i18n.t('labels.amount'),
       lblPatientAddress: this.$i18n.t('labels.patientAddress'),
@@ -77,7 +70,7 @@ export default {
       lblTransaction: '',
       insuranceAmmount: '',
       patients: patientsData,
-      transactionURL: '',
+      transactionURL: ''
     };
   },
   methods: {
@@ -136,6 +129,9 @@ export default {
   computed: {
     userType() {
       return this.$store.state.userType;
+    },
+    patientsList() {
+      return this.patients.map(patient => `${patient.name} - ${patient.address}`);
     },
   },
 };

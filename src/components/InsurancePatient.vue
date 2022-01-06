@@ -13,23 +13,17 @@
         </div>
 
         <b-field :label="lblDoctorAddress">
-          <div>
-            <b-input
-              list="doctor-address"
-              v-model="newDoctor"
-              :placeholder="lblDropDownPlaceholder"
-              :invalid-feedback="errDoctorAddr"
-              :state="newDoctorState"
-              required
-              minlength="4"
-            >
-            </b-input>
-            <datalist class="dr-address" id="doctor-address">
-              <option v-for="doctor in doctors" v-bind:key="doctor.address">
-                {{ doctor.name }} - {{ doctor.address }}
-              </option>
-            </datalist>
-          </div>
+          <b-autocomplete
+            required
+            minlength="4"
+            :open-on-focus="true"
+            v-model="newDoctor"
+            :data="doctorsList"
+            :placeholder="lblDropDownPlaceholder"
+            :invalid-feedback="errDoctorAddr"
+            :clearable="true"
+          >
+          </b-autocomplete>
         </b-field>
 
         <b-field :label="lblAmount">
@@ -38,14 +32,15 @@
             :placeholder="lblNumber"
             required
             type="number"
-            min="0"
+            min="0.01"
+            step="0.01"
           />
         </b-field>
       </form>
     </div>
     <div class="is-flex is-justify-content-space-between">
       <span class="transaction-lbl-url title">{{ lblTransaction }}</span>
-      <a target="_blank" :href="transactionURL" class="transaction-lbl-url title">{{ transactionURL }}</a>
+      <a target="_blank" :href="transactionURL" class="transaction-url title">{{ transactionURL }}</a>
     </div>
   </div>
 </template>
@@ -130,11 +125,10 @@ export default {
       }
     },
   },
+  computed: {
+    doctorsList() {
+      return this.doctors.map(doctor => `${doctor.name} - ${doctor.address}`);
+    },
+  },
 };
 </script>
-
-<style scoped>
- .dr-address {
-   background-color: hotpink !important;
- }
-</style>

@@ -23,7 +23,7 @@ export default function createWeb3() {
             Vue.$toast.open({
               message: pendingTxHash.msg,
               type: "success",
-              duration: 10000,
+              duration: 3000,
               pauseOnHover: true,
               position: "top-right",
             });

@@ -1,0 +1,21 @@
+@import 'main.scss';
+
+.nf{
+    text-align: center;
+  }
+  
+  .not-found {
+    text-align: center;
+    color: $not-found-color;
+    text-shadow: 2px 2px $not-found-text-shadow;
+    font-size: 200px;
+    padding-top: 0vh;
+  }
+  
+  .not-found-text {
+    font-size: 30px;
+    font-weight: bold;
+    color: $not-found-text-color;
+    text-shadow: 2px 2px $not-found-text-test-shadow;
+    padding-top: 10vh;
+  }

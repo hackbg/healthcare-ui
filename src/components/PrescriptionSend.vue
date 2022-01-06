@@ -1,14 +1,23 @@
 <template>
   <div>
     <form ref="form" @submit.stop.prevent="handleSubmit" class="modal-form">
-      <div class="modal-card">
+      <div class="modal-card prescription-modal">
         <header class="modal-card-head">
           <p class="modal-card-title">{{ $t('labels.sendPrescription') }}</p>
           <button type="button" class="delete" @click="$emit('close')" />
         </header>
         <section class="modal-card-body">
           <b-field :label="pharmacyAddress">
-            <div>
+            <b-autocomplete
+            required
+            :open-on-focus="true"
+            v-model="newPharmacy"
+            :data="pharmacysList"
+            :placeholder="lblDropDownPlaceholder"
+            :clearable="true"
+          >
+          </b-autocomplete>
+            <!-- <div>
               <b-input
                 list="my-list-id"
                 v-model="newPharmacy"
@@ -20,24 +29,13 @@
                   {{ pharmacy.name }} - {{ pharmacy.address }}
                 </option>
               </datalist>
-            </div>
+            </div> -->
           </b-field>
         </section>
         <footer class="modal-card-foot">
           <b-button :label="btnClose" @click="handleClose"/>
           <b-button :label="btnOK" @click="handleOk" type="is-primary" id="btn-ok"/>
         </footer>
-        <!-- <b-form-group
-        :label="pharmacyAddress"
-        label-for="pharmacy-address-input"
-        invalid-feedback="errPharmacyAddr"
-        :state="newPharmacyState"
-      >
-        <b-form-input list="my-list-id" v-model="newPharmacy" class="input-main"></b-form-input>
-        <datalist id="my-list-id">
-          <option v-for="pharmacy in pharmacies" v-bind:key="pharmacy.address">{{ pharmacy.name }} - {{ pharmacy.address }}</option>
-        </datalist>
-      </b-form-group> -->
       </div>
     </form>
   </div>
@@ -46,7 +44,7 @@
 <script>
 import Vue from 'vue';
 import prescriptionsABI from '../web3/prescriptionsABI';
-import '../assets/css/app.css';
+import '../assets/scss/app.scss';
 import pharmaciesData from '../data/pharmacies.json';
 
 export default {
@@ -157,5 +155,16 @@ export default {
       // });
     },
   },
+  computed: {
+    pharmacysList() {
+      return this.pharmacies.map(pharmacy => `${pharmacy.name} - ${pharmacy.address}`);
+    },
+  }
 };
 </script>
+
+<style scoped>
+  .prescription-modal {
+    min-height: 28rem;
+  }
+</style>

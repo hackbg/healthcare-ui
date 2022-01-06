@@ -26,7 +26,7 @@ export default {
     return {
       ropsten: false,
       connected: false,
-      firstCheck: false
+      firstCheck: false,
     }
   },
   computed: {
@@ -35,7 +35,8 @@ export default {
   created() {
     setInterval(async () => {
       this.ropsten = await this.$store.state.web3.eth.net.getNetworkType() === "ropsten";
-      this.connected = await this.$store.state.web3.eth.net.isListening();
+      const ret = await this.$store.state.web3.eth.getAccounts();
+      this.connected = ret.length > 0;
       this.firstCheck = true;
     }, 1000);
   }

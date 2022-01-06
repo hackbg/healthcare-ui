@@ -54,12 +54,11 @@
       v-model="isComponentModalActive"
       has-modal-card
       trap-focus
-      :destroy-on-hide="false"
       aria-role="dialog"
       :aria-label="lblSendPrescription"
       aria-modal
     >
-      <template #default="props" has-modal-card trap-focus :destroy-on-hide="false">
+      <template #default="props">
         <prescription-send :tokenID="selectedId" @close="props.close"></prescription-send>
       </template>
     </b-modal>

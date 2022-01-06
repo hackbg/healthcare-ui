@@ -13,22 +13,16 @@
         </div>
 
         <b-field :label="lblPatientAddress">
-          <div>
-            <b-input
-              list="patient-prescription"
-              v-model="newPatient"
-              :placeholder="lblDropDownPlaceholder"
-              :invalid-feedback="errPatientAddr"
-              :state="newPatientState"
-              required
-            >
-            </b-input>
-            <datalist id="patient-prescription">
-              <option v-for="patient in patients" v-bind:key="patient.address">
-                {{ patient.name }} - {{ patient.address }}
-              </option>
-            </datalist>
-          </div>
+          <b-autocomplete
+            required
+            :open-on-focus="true"
+            v-model="newPatient"
+            :data="patientsList"
+            :placeholder="lblDropDownPlaceholder"
+            :invalid-feedback="errPatientAddr"
+            :clearable="true"
+          >
+          </b-autocomplete>
         </b-field>
 
 <!-- TODO: with that options in the field down can add msg wit error type="is-danger"
@@ -51,7 +45,6 @@
             v-model="selectedDate"
             icon="calendar"
             :placeholder="lblDropDownPlaceholder"
-            :date-parser="getTimestamp"
             horizontal-time-picker
             rounded
             required
@@ -155,7 +148,9 @@ export default {
       try {
         // PrescriptionsABI.getContract()
         //   .methods.createPrescription(prescriptionMeds.join(','), patient, this.selectedDate)
-        const date = Math.ceil(new Date(this.selectedDate) - new Date() / 1000) + this.magicDateNumber;
+        const date = Math.ceil((new Date(this.selectedDate) - new Date()) / 1000) + this.magicDateNumber;
+        console.log(this.selectedDate)
+        console.log(date);
         PrescriptionsABI.getContract()
           .methods.createPrescription(prescriptionMeds.join(','), patient, date)
           .send(
@@ -176,8 +171,8 @@ export default {
               transactionHash = `transaction hash: ${transactionHash}`;
 
               this.newPatient = '';
-              this.medicines = [];
-              this.selectedDate = '';
+              this.value = [];
+              this.selectedDate = null;
 
               Vue.$toast.open({
                 message: transactionHash,
@@ -204,20 +199,19 @@ export default {
         });
       }
     },
-
-    getTimestamp(date) {
-      return Math.ceil(new Date(date) - new Date() / 1000) + this.magicDateNumber;
-    },
   }, 
   computed: {
     userType() {
       return this.$store.state.userType;
     },
+    patientsList() {
+      return this.patients.map(patient => `${patient.name} - ${patient.address}`);
+    },
   },
   async created() {
-    const count = await MedicinesABI.getContract().methods.medicinesCount.call()._method.outputs
-      .length;
-    for (let i = 0; i <= count; i++) {
+     const count = await MedicinesABI.getContract().methods.medicinesCount().call({from: this.$store.state.web3.currentProvider.selectedAddress});
+
+    for (let i = 0; i < count; i++) {
       const medicine = await MedicinesABI.getContract().methods.medicines(i).call();
       const option = {name: medicine, code: i, value: i};
       this.medicines.push(option);

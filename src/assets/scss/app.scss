@@ -1,0 +1,71 @@
+@import '@hackbg/design-system/dist/default';
+@import 'main.scss';
+
+  ::selection {
+    background: $mark-text;
+    color: $mark-text-color;
+  }
+
+// .btn-primary {
+//   background-color: #832DF4 !important;
+//   border: 1px solid #6635a6 !important;
+// }
+
+//   .btn-primary:hover {
+//     background-color: #af59be !important;
+//     border: 1px solid #832DF4 !important;
+//     transform: scale(1.1);
+//   }
+
+  // .btn-primary:focus {
+  //   box-shadow: 0 0 0 0.2rem rgb(131, 45, 244, 45%) !important;
+  // }
+
+.multiselect__tags {
+  border: 1px solid $multiselect-border !important;
+}
+
+.multiselect__tag {
+  background: $multiselect-tag !important;
+}
+
+.multiselect__tag-icon:hover {
+  background-color: $multiselect-tag-hover !important;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: $multiselect-placeholder !important;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: $multiselect-placeholder !important;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: $multiselect-placeholder !important;
+}
+
+.multiselect__placeholder {
+  color: $multiselect-placeholder !important;
+}
+
+  .btn-outline-primary.disabled, .btn-outline-primary:disabled {
+    font-weight: bold !important;
+  }
+
+.transaction-lbl-url {
+  font-size: 12px;
+}
+
+.transaction-url {
+  font-size: 11px;
+}
+
+a.dropdown-item.is-active {
+  background-color: inherit !important;
+}
+
+.modal-close {
+  display: none !important;
+}
