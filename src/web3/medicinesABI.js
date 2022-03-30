@@ -1,6 +1,6 @@
 import store from '../store'
 
-const address = '0x70D48cB1236Dd7a872629dAb11821Ce2888A2Be0'; // THE CONTRACT ADDRESS
+const address = process.env.VUE_APP_MEDICINES_ABI_ADDRESS; // THE CONTRACT ADDRESS
 
 const medicinesABI = [
     {
@@ -101,7 +101,7 @@ const medicinesABI = [
   ]; // THE ABI
 
   const module = {
-    getContract: () => new store.state.web3.eth.Contract(medicinesABI, localStorage.address || address),
+    getContract: () => new store.state.web3.eth.Contract(medicinesABI, address),
   }
   
   Object.freeze(module); // doesn't allow to add new properties to the object

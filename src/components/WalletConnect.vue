@@ -3,12 +3,12 @@
     Please install MetaMask or another Ethereum compatible wallet.
   </b-message>
   <b-message
-    v-else-if="!ropsten && connected"
+    v-else-if="!supported_network && connected"
     type="is-warning"
     :title="`Not available`"
     :closable="false"
   >
-    Please switch to Ropsten Test Network.
+    Please switch to Ropsten or Localhost Test Network.
   </b-message>
   <b-message
     v-else-if="firstCheck && ethereum && !connected"
@@ -24,7 +24,7 @@
 export default {
   data() {
     return {
-      ropsten: false,
+      supported_network: false,
       connected: false,
       firstCheck: false,
     }
@@ -34,7 +34,8 @@ export default {
   },
   created() {
     setInterval(async () => {
-      this.ropsten = await this.$store.state.web3.eth.net.getNetworkType() === "ropsten";
+      const network = await this.$store.state.web3.eth.net.getNetworkType();
+      this.supported_network = network === "ropsten" || network === "private";
       const ret = await this.$store.state.web3.eth.getAccounts();
       this.connected = ret.length > 0;
       this.firstCheck = true;

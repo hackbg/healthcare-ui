@@ -1,4 +1,17 @@
+# misc
 .DS_Store
+*.pem
+
+# dependencies
 node_modules
+
 package-lock.json
 dist
+
+# local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+.env

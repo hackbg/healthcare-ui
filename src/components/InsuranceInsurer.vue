@@ -40,8 +40,8 @@
       </form>
     </div>
     <div class="is-flex is-justify-content-space-between">
-      <span class="transaction-lbl-url title">{{ lblTransaction }}</span>
-      <a target="_blank" :href="transactionURL" class="transaction-url title">{{ transactionURL }}</a>
+      <span class="transaction-lbl-url">{{ lblTransaction }}</span>
+      <a target="_blank" :href="transactionURL" class="transaction-url">{{ transactionURL }}</a>
     </div>
   </div>
 </template>
@@ -94,7 +94,8 @@ export default {
                 });
                 return;
               }
-              this.transactionURL = `https://ropsten.etherscan.io/tx/${transactionHash}`;
+              const network = await this.$store.state.web3.eth.net.getNetworkType()
+              this.transactionURL = network === 'ropsten' ? `https://ropsten.etherscan.io/tx/${transactionHash}` : `${transactionHash}`;
               this.lblTransaction = this.$i18n.t('labels.transactionUrl');
 
               this.newPatient = '';

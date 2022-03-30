@@ -1,5 +1,7 @@
 # healthcare-ui
 
+You can see working version of the app which is deployed on netlify for ropsten test network: [healthcare](https://healthcare-hackbg.netlify.app/). You won't be able to interact like Doctor, Pharmacy and Incurer because those addresses need to be added, but you can see the features. It's demo app with demo login.
+
 ## Project setup
 ```
 npm install
@@ -20,17 +22,18 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
+## Configuration
+### .env
+In .env.example you can see the format of the .env file which you need to add in the project with the addresses of the deployed contracts
+
+### data
+In the data folder in the repo there are 3 json files for doctors, patients and pharmacies in which you can change the names and addresses, and add more.
+
+## Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Overview
 This repo includes responsive single-page application written with web3, Vue.js and Buefy and the ABIs for the smart contracts which can be found in the repo [healthcare](https://github.com/hackbg/healthcare)
-
-### Addressess for my test network
-Account 1 - Doctor  
-Account 2 - Insurer  
-Account 3 - Patient  
-Accounr 4 - Pharmacy
 
 ## About Healthcare
 
